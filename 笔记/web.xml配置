@@ -1,0 +1,5 @@
+比较全的资料：
+http://lijia3449.iteye.com/blog/2042518
+
+servlet的urlpattern配置实用通配符时，要么以"/"开头"*"结尾，要么以"*"开头，其他结尾，没有"/*.jsp"这种格式
+"/"缺省配置，在tomcat下的conf文件夹中有web.xml文件，所有web工程的web.xml文件都继承他，如果你覆盖了这个缺省配置，那么你静态资源（html）就访问不了了。
