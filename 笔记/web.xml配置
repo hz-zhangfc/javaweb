@@ -4,6 +4,10 @@ http://lijia3449.iteye.com/blog/2042518
 servlet的urlpattern配置实用通配符时，要么以"/"开头"*"结尾，要么以"*"开头，其他结尾，没有"/*.jsp"这种格式
 "/"缺省配置，在tomcat下的conf文件夹中有web.xml文件，所有web工程的web.xml文件都继承他，如果你覆盖了这个缺省配置，那么你静态资源（html）就访问不了了。
 
+一、servlet容器对url的匹配过程：
+
+当一个请求发送到servlet容器的时候，容器先会将请求的url减去当前应用上下文的路径作为servlet的映射url，比如我访问的是http://localhost/test/aaa.html（我的应用上下文是test），容器会将http://localhost/tes去掉，将剩下的/aaa.html部分拿来做servlet的映射匹配，也就是拿这剩下的部分与web.xml中配置的servlet的url-pattern进行匹配。注意：这个映射匹配过程是有一定的规则的，而且每次匹配最终都只匹配一个 servlet。（这一点和filter不同）
+
 url-pattern配置优先级：
 /*
 /abc/*
