@@ -41,7 +41,40 @@ javaweb入门
 
 ## 四、[HTTP协议](http://www.cnblogs.com/xdp-gacl/p/3751277.html)
 
-## 
+## 五、[servet开发一](http://www.cnblogs.com/xdp-gacl/p/3760336.html)
+
+* **servlet简介**
+
+* **servlet运行过程**
+
+* **servlet调用图**
+
+* **使用eclipse开发servlet**
+
+*　**servlet访问URL映射配置**
+
+* **Servlet访问URL使用*通配符映射**
+
+* **缺省servlet** 
+
+* **servlet线程安全问题**
+
+## 六、[servlet开发二](http://www.cnblogs.com/xdp-gacl/p/3763559.html)
+
+* **servletconfig详解**
+
+* **servletContext对象**
+
+* **servletContext的应用**<br>
+  1.多个servlet应用通过该对象实现数据共享<br>
+  setAttribute和 getAttribute<br>
+  2.获取web初始化数据<br>
+  注意使用getInitParameter方法的<br>
+  3.用servletContext实现请求转发<br>
+  注意：`复写HttpServlet中的doGet或doPost方法时，不去掉super.doXX时，会出现405错误`---[405错误]   (http://blog.csdn.net/qfs_v/article/details/2545168)<br>
+  **`4.利用ServletContext读取资源文件`---在这个`web项目中`**
+  
+
 
 
 
