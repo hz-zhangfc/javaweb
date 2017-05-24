@@ -9,14 +9,39 @@ javaweb入门
 ## 一、[javaweb入门](http://www.cnblogs.com/xdp-gacl/p/3729033.html)
 描述：web的介绍，Tomcat的安装及结构
 
+
 ## 二、[Tomcat服务器的学习使用一](http://www.cnblogs.com/xdp-gacl/p/3734395.html)
 * **Tomcat服务器端口的配置**<br>
   conf/servel.xml Conector节点
+  
 * **Tomcat虚拟目录的映射方式**<br>
   1.在servel.xml的Host元素中配置，加一个Context节点， 如：\<Context path="/hello" docBase="F:\java\helloProject"/\>
   2.把工程直接扔到webapps文件夹下，映射名就是工程目录的名称
- 
-## 三、[Tomcat服务器 ]()
+  3.在\conf\Catalina\localhost目录下键一个xml，如：aa.xml，则path就是/aa。在xml文件中加元素<Context docBase="F:\JavaWebDemoProject" />
+* **Tomcat配置虚拟主机**
+  　配置虚似主机就是配置一个网站。<br>
+    如："http://localhost:端口号/JavaWebAppName"的方式访问，其实访问的就是name是"localhost"的那台虚拟主机(Host)，这台虚拟主机管理webapps文件夹<br>下的所有web应用，详情见博客
+    
+* **windows系统注册域名**
+
+* **浏览器与服务器的交互过程**
+
+* **javaweb工程的目录结构**
+
+
+## 三、[Tomcat服务器的学习使用二 ](http://www.cnblogs.com/xdp-gacl/p/3744053.html)
+
+* **打包Javaweb应用**
+  
+* **Tomcat结构体系**
+
+* **互联网上的加密原理**
+
+* **Https连接**
+
+## 四、[HTTP协议](http://www.cnblogs.com/xdp-gacl/p/3751277.html)
+
+## 
 
 
 
