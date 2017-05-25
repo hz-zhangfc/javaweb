@@ -51,7 +51,7 @@ javaweb入门
 
 * **使用eclipse开发servlet**
 
-*　**servlet访问URL映射配置**
+* **servlet访问URL映射配置**
 
 * **Servlet访问URL使用*通配符映射**
 
@@ -91,8 +91,20 @@ javaweb入门
   
 ## 八、[HttpServletResponse对象二](http://www.cnblogs.com/xdp-gacl/p/3791993.html)
 
-* **HttpServletResponse常见应用——生成验证码**
+* **HttpServletResponse常见应用——生成验证码：一个小应用**
 
+* **设置响应头，控制浏览器行为**<br>
+  * 控制浏览器禁止缓存当前文档<br>
+    response.setDateHeader("expries",-1);<br>
+    response.setHeader("Cache-control","no-cache");<br>
+    response.setHeader("Pragma","no-cache");<br>
+  * 控制浏览器定时刷新网页<br>
+    response.setHeader("refresh","3");//3秒刷新一次<br>
+  * 实现请求重定向  `重点：控制浏览器重新请求`<br>
+    response.sendRedirect(/servlet/demo1);<br>
+    实质是：response.setHeader("Location","/servlet/demo1"); +  response.setStatus("302);
+    
+* <font color=#00ffff>WEB工程中的URL写法</font>
 
 
 
