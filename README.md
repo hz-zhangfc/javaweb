@@ -74,6 +74,24 @@ javaweb入门
   注意：`复写HttpServlet中的doGet或doPost方法时，不去掉super.doXX时，会出现405错误`---[405错误]   (http://blog.csdn.net/qfs_v/article/details/2545168)<br>
   **`4.利用ServletContext读取资源文件`---在这个`web项目中`**
   
+  
+## 七、[HttpServletResponse对象一](http://www.cnblogs.com/xdp-gacl/p/3789624.html)
+* **简绍，总览**<br>
+  1.向浏览器发送数据    注意：`一个流程只能使用一种流，要么xx要么xx`<br>
+  2.向浏览器发送响应头<br>
+  。。
+* **OutputStream流发送数据:`编码要一致`**
+
+* **PrintWriter:`需要仔细看一下，它的细节更多`**
+
+* **使用OutputStream或者PrintWriter向客户端浏览器输出数字**
+
+* **文件下载**<br>
+  `下载中文文件时，需要注意的地方就是中文文件名要使用URLEncoder.encode方法进行编码(URLEncoder.encode(fileName, "字符编码"))，否则会出现文件名乱码`
+  
+## 八、[HttpServletResponse对象二](http://www.cnblogs.com/xdp-gacl/p/3791993.html)
+
+* **HttpServletResponse常见应用——生成验证码**
 
 
 
