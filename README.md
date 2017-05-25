@@ -104,8 +104,13 @@ javaweb入门
     response.sendRedirect(/servlet/demo1);<br>
     实质是：response.setHeader("Location","/servlet/demo1"); +  response.setStatus("302);
     
-* <font color=#00ffff>WEB工程中的URL写法</font>
+* **<font color=#00ffff>WEB工程中的URL写法</font>**<br>
+   如果"/"是给服务器用的，则代表当前的web工程，如果"/"是给浏览器用的，则代表webapps目录(tomcat下的webapps文件夹)。
+   
+* **response中流使用细节**
 
+# 九、[通过servlet生成验证图片](http://www.cnblogs.com/xdp-gacl/p/3798190.html)  《项目 --待》
 
+# 十、[HttpRequest对象一](http://www.cnblogs.com/xdp-gacl/p/3798347.html)
 
 
