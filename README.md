@@ -109,8 +109,16 @@ javaweb入门
    
 * **response中流使用细节**
 
-# 九、[通过servlet生成验证图片](http://www.cnblogs.com/xdp-gacl/p/3798190.html)  《项目 --待》
+## 九、[通过servlet生成验证图片](http://www.cnblogs.com/xdp-gacl/p/3798190.html)  《项目 --待》
 
-# 十、[HttpRequest对象一](http://www.cnblogs.com/xdp-gacl/p/3798347.html)
+## 十、[HttpRequest对象一](http://www.cnblogs.com/xdp-gacl/p/3798347.html)
 
+* **HttpRequest介绍**
+
+* 常用的方法
+  * 获取客户机信息
+  * 获取客户机请求头
+  * 获取客户机请求参数（客户端提交的数据--这是比较常用的）注意一下他的getParameterMap方法，看看代码里是怎么取出数据的
+  * `request接受表单提交参数中文乱码问题`  ---这是重点
+  * 实现请求转发
 
