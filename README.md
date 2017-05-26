@@ -1,3 +1,4 @@
+
 # servlet
 javaweb入门
 
@@ -122,5 +123,6 @@ javaweb入门
   * `request接受表单提交参数中文乱码问题`  ---这是重点
   * 实现请求转发
 
-## 十一、使用cookie进行会话管理
-
+## [十一、使用cookie进行会话管理](http://www.cnblogs.com/xdp-gacl/p/3803033.html)
+* 1.使用时注意点：设置有效时间，设置路径；删除：name,path要一致,有效时间设为0；
+* 2.cookie存储中文时乱码问题；`URLEncoder,URLDecoder`
