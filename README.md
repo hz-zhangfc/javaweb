@@ -126,3 +126,12 @@ javaweb入门
 ## [十一、使用cookie进行会话管理](http://www.cnblogs.com/xdp-gacl/p/3803033.html)
 * 1.使用时注意点：设置有效时间，设置路径；删除：name,path要一致,有效时间设为0；
 * 2.cookie存储中文时乱码问题；`URLEncoder,URLDecoder`
+
+## [十二、session](http://www.cnblogs.com/xdp-gacl/p/3855702.html)
+* 1.session的实现原理
+* 2.禁用cookie后的session处理--url重写
+* 3.session创建和销毁的时机
+
+## [十三、使用session防止表单重复提交](http://www.cnblogs.com/xdp-gacl/p/3859416.html)
+
+
