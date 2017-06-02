@@ -134,3 +134,4 @@ javaweb入门
 
 ## [十三、使用session防止表单重复提交](http://www.cnblogs.com/xdp-gacl/p/3859416.html)
 * \<form>表单有个onsubmit属性onsubmit="return dosubmit()"当dosubmit返回false时，不会提交表单
+* BASE64Encoder挂了，用Base64代替，放回的byte数组用new String(bytes)会得到和原来一样的结果
