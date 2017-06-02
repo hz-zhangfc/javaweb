@@ -133,5 +133,4 @@ javaweb入门
 * 3.session创建和销毁的时机
 
 ## [十三、使用session防止表单重复提交](http://www.cnblogs.com/xdp-gacl/p/3859416.html)
-
-
+* \<form>表单有个onsubmit属性onsubmit="return dosubmit()"当dosubmit返回false时，不会提交表单
