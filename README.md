@@ -135,3 +135,6 @@ javaweb入门
 ## [十三、使用session防止表单重复提交](http://www.cnblogs.com/xdp-gacl/p/3859416.html)
 * \<form>表单有个onsubmit属性onsubmit="return dosubmit()"当dosubmit返回false时，不会提交表单
 * BASE64Encoder挂了，用Base64代替，放回的byte数组用new String(bytes)会得到和原来一样的结果
+
+## [jsp入口](https://github.com/hz-zhangfc/javaweb/blob/master/jsp.md)
+`在Tomcat的work\Catalina\localhost(localhost是我配置的虚拟主机，在server.xml中配置的)，里面有jsp被翻译成servlet后的代码，看一看，什么疑惑都明白了`
