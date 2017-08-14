@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.zhangfc.hello.HelloSpring;
+import cn.zhangfc.hello.Person;
 
 public class TestDemo1 extends Test0 {
 	@Test
@@ -34,5 +35,17 @@ public class TestDemo1 extends Test0 {
 			/E:/gitrepository/servlet/spring/spring_bean/bin/
 			 * 再在这路劲后面填充文件路径
 		 */
+	}
+	
+	/**
+	 * hello.xml中的2，3  属性注入和参数注入
+	 */
+	@Test
+	public void test2()
+	{
+		Person p1 = (Person) super.context.getBean("person1");
+		Person p2 = (Person) super.context.getBean("person2");
+		sop(p1);
+		sop(p2);
 	}
 }

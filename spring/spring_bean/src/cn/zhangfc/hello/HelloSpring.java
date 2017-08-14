@@ -2,7 +2,6 @@ package cn.zhangfc.hello;
 
 public class HelloSpring {
 	private String name;
-	
 	public String getName() {
 		return name;
 	}
