@@ -1,8 +1,8 @@
-<h1>第一阶段：会用</h1>
+<h1 style="background-color:#E6E6FA">第一阶段：会用</h1>
 <h2>一.环境准备</h2>
 eclipse+spring-tool-suite
-<strong> 注意：可以在这个插件官网上看看eclipse版本和该插件版本是否符合</strong>
-<a href="https://github.com/hz-zhangfc/javaweb/blob/master/spring/images/spring-tool-suite.PNG">插件的安装</a>
+<strong> 注意：可以在这个插件官网上看看eclipse版本和该插件版本是否符合</strong><br/>
+<a href="https://github.com/hz-zhangfc/javaweb/blob/master/spring/images/spring-tool-suite.PNG">插件的安装</a><br/>
 <strong>碰到的问题：当安装失败时，试试勾选最下面那个选项</strong>
 <image src="https://github.com/hz-zhangfc/javaweb/blob/master/spring/images/1.PNG"/>
 <hr>
@@ -13,6 +13,7 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 <strong>一个个点过去看看</strong>
 <hr/>
 <h2>三.IOC</h2>
+<strong>一个反射贯穿其中</strong>
 <h3>HelloSpring</h3>
 <p>
 内容：<a href="https://github.com/hz-zhangfc/javaweb/blob/master/spring/spring_bean/test/cn/zhangfc/test/TestDemo1.java">ApplicationContext,配置文件路径加载</a>，
@@ -41,4 +42,16 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 		 &lt;constructor-arg value="男" type="java.lang.String" > &lt;/constructor-arg>
    &lt;/bean>
    <strong>这种写法用在参数个数一致时加以区分</strong>
-<pre>
+</pre>
+
+<h3>配置bean的一些知识点</h3>
+<h4>字面值</h4>
+<ul>
+	<li>字面值：可用字符串表示的值，可以通过 <value> 元素标签或 value 属性进行注入。</li>
+	<li>基本数据类型及其封装类、String 等类型都可以采取字面值注入的方式</li>
+	<li>若字面值中包含特殊字符，可以把字面值包裹起来。使用 &lt;![CDATA[]]>(在xml或html中"&lt;"是特殊字符)</li>
+	&lt;property name="name" value="&lt;![CDATA[&lt;哈哈>]]>">&lt;/property>
+</ul>
+<h4>引用其他bean</h4>
+
+
