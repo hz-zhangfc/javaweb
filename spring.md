@@ -53,5 +53,81 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 	&lt;property name="name" value="&lt;![CDATA[&lt;哈哈>]]>">&lt;/property>
 </ul>
 <h4>引用其他bean</h4>
+<pre>
+	&lt;bean id="car1" class="cn.zhangfc.hello.Car"/>
+	&lt;bean id="person" class="cn.zhangfc.hello.Person">
+		&lt;property name="car" ref="car1"/>
+	&lt;/bean>
+</pre>
+<h4>内部bean</h4>
+<pre>
+	&lt;bean id="person2" class="cn.zhangfc.hello.Person">
+		&lt;property name="car">
+			&lt;!-- 内部 bean, 类似于匿名内部类对象. 不能被外部的 bean 来引用, 也没有必要设置 id 属性 -->
+			&lt;bean class="cn.zhangfc.hello.Car">
+				&lt;property name="price" value="10000">&lt;/property>
+			&lt;/bean>
+		&lt;/property>
+	&lt;/bean>
+</pre>
+<h4>null值和级联属性</h4>
+<pre>
+	<b>级联属性</b>
+	&lt;bean id="dao5" class="com.atguigu.spring.ref.Dao">&lt;/bean>
+	&lt;bean id="service" class="com.atguigu.spring.ref.Service">
+		&lt;!-- 通过 ref 属性值指定当前属性指向哪一个 bean! -->
+		&lt;property name="dao" ref="dao5"></property>
+	&lt;/bean>
+	&lt;bean id="action" class="com.atguigu.spring.ref.Action">
+		&lt;property name="service" ref="service2">&lt;/property>
+		&lt;!-- 设置级联属性(了解) -->
+		&lt;property name="service.dao.dataSource" value="DBCP2">&lt;/property>
+	&lt;/bean>
+	<b>null值</b>
+	&lt;bean id="dao2" class="com.atguigu.spring.ref.Dao">
+		&lt;!-- 为 Dao 的 dataSource 属性赋值为 null, 若某一个 bean 的属性值不是 null, 使用时需要为其设置为 null(了解) -->
+		&lt;property name="dataSource">&lt;null/>&lt;/property>
+	&lt;/bean>
+</pre>
+<h4>集合属性</h4>
+<h5>it is so important</h5>
+<h5>List集合</h5>
+<pre>
+	&lt;bean id="user" class="com.atguigu.spring.helloworld.User">
+		&lt;property name="userName" value="Jack">&lt;/property>
+		&lt;property name="cars">
+			&lt;!-- 使用 list 元素来装配集合属性 -->
+			&lt;list>
+				&lt;ref bean="car"/>
+				&lt;ref bean="car2"/>
+			&lt;/list>
+		&lt;/property>
+	&lt;/bean>
+</pre>
+<pre>
+	<b>需要使用 utility scheme（一个命名空间） 定义集合</b>
+	&lt;!-- 声明集合类型的 bean -->
+	&lt;util:list id="cars">
+		&lt;ref bean="car"/>
+		&lt;ref bean="car2"/>
+	&lt;/util:list>	
+	&lt;bean id="user2">
+		&lt;property name="cars" ref="cars">&lt;/property>
+	&lt;/bean>
+</pre>
 
-
+<h3>使用 p 命名空间</h3>
+<pre>
+	<b>先引入该命名空间</b>
+	&lt;bean id="user3" class="com.atguigu.spring.helloworld.User"
+		p:cars-ref="cars" p:userName="Titannic">
+	&lt;/bean>
+</pre>
+<h3>自动装配</h3>
+<pre>
+	自动装配: 只声明 bean, 而把 bean 之间的关系交给 IOC 容器来完成 
+	byType: 根据类型进行自动装配. 但要求 IOC 容器中只有一个类型对应的 bean, 若有多个则无法完成自动装配.
+	byName: 若属性名和某一个 bean 的 id 名一致, 即可完成自动装配. 若没有 id 一致的, 则无法完成自动装配
+	在使用 XML 配置时, 自动转配用的不多. 但在基于 注解 的配置时, 自动装配使用的较多.
+</pre>
+<h3>继承 Bean 配置</h3>
