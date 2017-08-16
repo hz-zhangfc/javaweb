@@ -205,10 +205,19 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 	<li>Spring 表达式语言（简称SpEL）：是一个支持运行时查询和操作对象图的强大的表达式语言。</li>
 	<li>语法类似于 EL：SpEL 使用 #{…} 作为定界符，所有在大框号中的字符都将被认为是 SpEL</li>
 	<li>SpEL 为 bean 的属性进行动态赋值提供了便利</li>
-	<li><pre>通过 SpEL 可以实现：
-				通过 bean 的 id 对 bean 进行引用
-				调用方法以及引用对象中的属性
-				计算表达式的值
-				正则表达式的匹配</pre></li>
+	<li>通过 SpEL 可以实现：
+				通过 bean 的 id 对 bean 进行引用;  
+				调用方法以及引用对象中的属性;
+				计算表达式的值;
+				正则表达式的匹配;</li>
 
-</ul>
+</ul><hr/>
+<h4>SpEL：字面量</h4>
+<pre>
+	整数：&lt;property name="count" value="#{5}"/>
+	小数：&lt;property name="frequency" value="#{89.7}"/>
+	科学计数法：&lt;property name="capacity" value="#{1e4}"/>
+	String可以使用单引号或者双引号作为字符串的定界符号：&lt;property name=“name” value="#{'Chuck'}"/> 或 
+		&lt;property name='name' value='#{"Chuck"}'/>
+	Boolean：&lt;property name="enabled" value="#{false}"/>
+</pre>
