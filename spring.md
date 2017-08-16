@@ -220,4 +220,21 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 	String可以使用单引号或者双引号作为字符串的定界符号：&lt;property name=“name” value="#{'Chuck'}"/> 或 
 		&lt;property name='name' value='#{"Chuck"}'/>
 	Boolean：&lt;property name="enabled" value="#{false}"/>
+</pre><hr/>
+<h4>SpEL：引用 Bean、属性和方法1</h4>
+<pre>
+	&lt;bean name="car1" class="cn.zhangfc.hello.Car">
+	&lt;property name="name" value="car1">&lt;/property>
+	&lt;property name="price" value="10000">&lt;/property>
+	&lt;/bean>
+	<b>引用car bean</b>
+	&lt;bean name="person3" class="cn.zhangfc.hello.Person" 
+	p:car="#{car1}" p:name="张三" p:age="14" p:sex="男">&lt;/bean>
+	<b>引用其他对象属性以及调用方法，链式方法</b>
+	&lt;bean name="person4" class="cn.zhangfc.hello.Person" 
+	p:name="#{person3.name}" p:age="#{person3.getAge()}"
+	p:sex="#{person3.getSex().toString()}"/>
+	<b>调用静态方法或静态属性</b>
+	<b>通过 T() 调用一个类的静态方法，它将返回一个 Class Object，然后再调用相应的方法或属性</b>
+	p:age="#{T(java.lang.Math).PI}" 
 </pre>
