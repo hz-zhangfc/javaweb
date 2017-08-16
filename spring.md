@@ -241,4 +241,35 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 <h4>SpEL支持的运算符号</h4>
 <image src="https://github.com/hz-zhangfc/javaweb/blob/master/spring/images/3.PNG"/>
 <image src="https://github.com/hz-zhangfc/javaweb/blob/master/spring/images/4.PNG"/>
-<hr/>
+<hr/><hr/>
+<h3>其他创建bean的方式</h3>
+<h4>通过调用静态工厂方法创建 Bean</h4>
+<pre>
+ 	 &lt;!-- 通过工厂方法的方式来配置 bean -->
+	&lt;!-- 1. 通过静态工厂方法: 一个类中有一个静态方法, 可以返回一个类的实例(了解) -->
+	&lt;!-- 在 class 中指定静态工厂方法的全类名, 在 factory-method 中指定静态工厂方法的方法名 -->
+	&lt;bean id="dateFormat" class="java.text.DateFormat" factory-method="getDateInstance">
+	&lt;!-- 可以通过 constructor-arg 子节点为静态工厂方法指定参数 -->
+		&lt;constructor-arg value="2">&lt;/constructor-arg>
+	&lt;/bean>
+</pre><hr/>
+<h4>通过调用实例工厂方法创建 Bean</h4>
+<pre>
+   &lt;!-- 2. 实例工厂方法: 先需要创建工厂对象, 再调用工厂的非静态方法返回实例(了解) -->
+	&lt;!-- ①. 创建工厂对应的 bean -->
+	&lt;bean id="simpleDateFormat" class="java.text.SimpleDateFormat">
+		&lt;constructor-arg value="yyyy-MM-dd hh:mm:ss">&lt;/constructor-arg>
+	&lt;/bean>
+	&lt;!-- ②. 有实例工厂方法来创建 bean 实例 -->
+	&lt;!-- factory-bean 指向工厂 bean, factory-method 指定工厂方法(了解) -->
+	&lt;bean id="datetime" factory-bean="simpleDateFormat" factory-method="parse">
+		&lt;!-- 通过 constructor-arg 执行调用工厂方法需要传入的参数 -->
+		&lt;constructor-arg value="1990-12-12 12:12:12">&lt;/constructor-arg>
+	&lt;/bean>
+</pre><hr/>
+<h4>实现 FactoryBean 接口在 Spring IOC 容器中配置 Bean</h4>
+<a href="https://github.com/hz-zhangfc/javaweb/blob/master/spring/spring_bean/sr/cn/zhangfc/getbean">代码详见</a>
+<ul>
+	<li>Spring 中有两种类型的 Bean, 一种是普通Bean, 另一种是工厂Bean, 即FactoryBean. </li>
+	<li>工厂 Bean 跟普通Bean不同, 其返回的对象不是指定类的一个实例, 其返回的是该工厂 Bean 的 getObject 方法所返回的对象 </li>
+</ul>
