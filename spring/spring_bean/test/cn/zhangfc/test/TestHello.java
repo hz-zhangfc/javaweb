@@ -7,7 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import cn.zhangfc.hello.HelloSpring;
 import cn.zhangfc.hello.Person;
 
-public class TestDemo1 extends Test0 {
+public class TestHello extends Test0 {
 	@Test
 	public void testHello()
 	{
@@ -25,9 +25,9 @@ public class TestDemo1 extends Test0 {
 	@Test
 	public void testPath()
 	{
-		sop(TestDemo1.class.getResource("").getPath());
-		sop(TestDemo1.class.getResource("/").getPath());
-		sop(TestDemo1.class.getClassLoader().getResource("").getPath());
+		sop(TestHello.class.getResource("").getPath());
+		sop(TestHello.class.getResource("/").getPath());
+		sop(TestHello.class.getClassLoader().getResource("").getPath());
 		//sop(TestDemo1.class.getClassLoader().getResource("/").getPath()); »á±¨´í
 		/**
 		 * /E:/gitrepository/servlet/spring/spring_bean/bin/cn/zhangfc/test/

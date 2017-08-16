@@ -18,4 +18,13 @@ public  abstract class Test0 {
 	{
 		System.out.println(obj);
 	}
+	
+	/**
+	 * @param beanName beanµÄÃû³Æ
+	 * @return  context.getBean(beanName);
+	 */
+	public Object get(String beanName)
+	{
+		return context.getBean(beanName);
+	}
 }

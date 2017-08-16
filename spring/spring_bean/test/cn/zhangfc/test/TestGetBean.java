@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import cn.zhangfc.getbean.Pen;
 
-public class TestDemo2 extends Test0 {
-	public TestDemo2()
+public class TestGetBean extends Test0 {
+	public TestGetBean()
 	{
 		super("/cn/zhangfc/getbean/getBean.xml");
 	}
