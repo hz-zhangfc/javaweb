@@ -5,27 +5,27 @@ eclipse+spring-tool-suite
 <a href="https://github.com/hz-zhangfc/javaweb/blob/master/spring/images/spring-tool-suite.PNG">插件的安装</a><br/>
 <strong>碰到的问题：当安装失败时，试试勾选最下面那个选项</strong>
 <image src="https://github.com/hz-zhangfc/javaweb/blob/master/spring/images/1.PNG"/>
-<hr>
+<hr/><hr/><hr/>
 <h2>二.spring in eclipse</h2>
 1.spring 配置文件<br/>
 new-->other-->输入spring关键字-->选择spring bean configure file<storng>不清楚可以全部试过去</strong><br/>
 <image src="https://github.com/hz-zhangfc/javaweb/blob/master/spring/images/2.PNG" width="500" height="200"/>
 <strong>一个个点过去看看</strong>
-<hr/>
+<hr/><hr/><hr/>
 <h2>三.IOC</h2>
 <strong>一个反射贯穿其中</strong>
-<h3>HelloSpring</h3>
+<h3>1.HelloSpring</h3>
 <p>
 内容：<a href="https://github.com/hz-zhangfc/javaweb/blob/master/spring/spring_bean/test/cn/zhangfc/test/TestDemo1.java">ApplicationContext,配置文件路径加载</a>，
 <a  href="https://github.com/hz-zhangfc/javaweb/blob/master/spring/spring_bean/src/cn/zhangfc/hello/hello.xml">配置文件编写</a>
-</p>
-<h3>属性注入</h3>
+</p><hr/><hr/>
+<h3>2.属性注入</h3>
 <pre>
   &lt;bean name="hellospring" class="cn.zhangfc.hello.HelloSpring">
 	  &lt;property name="name" value="张三">&lt;/property>
   &lt;/bean>
-</pre>
-<h3>构造方法注入</h3>
+</pre><hr/><hr/>
+<h3>3.构造方法注入</h3>
 <pre>
    <strong>写法一</strong>
    &lt;bean name="person2" class="cn.zhangfc.hello.Person">
@@ -42,24 +42,23 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 		 &lt;constructor-arg value="男" type="java.lang.String" > &lt;/constructor-arg>
    &lt;/bean>
    <strong>这种写法用在参数个数一致时加以区分</strong>
-</pre>
-
-<h3>配置bean的一些知识点</h3>
-<h4>字面值</h4>
+</pre><hr/><hr/>
+<h3>4.配置bean的一些知识点</h3>
+<h4>a.字面值</h4>
 <ul>
 	<li>字面值：可用字符串表示的值，可以通过 <value> 元素标签或 value 属性进行注入。</li>
 	<li>基本数据类型及其封装类、String 等类型都可以采取字面值注入的方式</li>
 	<li>若字面值中包含特殊字符，可以把字面值包裹起来。使用 &lt;![CDATA[]]>(在xml或html中"&lt;"是特殊字符)</li>
 	&lt;property name="name" value="&lt;![CDATA[&lt;哈哈>]]>">&lt;/property>
-</ul>
-<h4>引用其他bean</h4>
+</ul><hr/>
+<h4>b.引用其他bean</h4>
 <pre>
 	&lt;bean id="car1" class="cn.zhangfc.hello.Car"/>
 	&lt;bean id="person" class="cn.zhangfc.hello.Person">
 		&lt;property name="car" ref="car1"/>
 	&lt;/bean>
-</pre>
-<h4>内部bean</h4>
+</pre><hr/>
+<h4>c.内部bean</h4>
 <pre>
 	&lt;bean id="person2" class="cn.zhangfc.hello.Person">
 		&lt;property name="car">
@@ -69,8 +68,8 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 			&lt;/bean>
 		&lt;/property>
 	&lt;/bean>
-</pre>
-<h4>null值和级联属性</h4>
+</pre><hr/>
+<h4>d.null值和级联属性</h4>
 <pre>
 	<b>级联属性</b>
 	&lt;bean id="dao5" class="com.atguigu.spring.ref.Dao">&lt;/bean>
@@ -88,8 +87,8 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 		&lt;!-- 为 Dao 的 dataSource 属性赋值为 null, 若某一个 bean 的属性值不是 null, 使用时需要为其设置为 null(了解) -->
 		&lt;property name="dataSource">&lt;null/>&lt;/property>
 	&lt;/bean>
-</pre>
-<h4>集合属性</h4>
+</pre><hr/>
+<h4>e.集合属性</h4>
 <h5>it is so important</h5>
 <h5>List集合</h5>
 <pre>
@@ -114,23 +113,23 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 	&lt;bean id="user2">
 		&lt;property name="cars" ref="cars">&lt;/property>
 	&lt;/bean>
-</pre>
+</pre><hr/><hr/>
 
-<h3>使用 p 命名空间</h3>
+<h3>5.使用 p 命名空间</h3>
 <pre>
 	<b>先引入该命名空间</b>
 	&lt;bean id="user3" class="com.atguigu.spring.helloworld.User"
 		p:cars-ref="cars" p:userName="Titannic">
 	&lt;/bean>
-</pre>
-<h3>自动装配</h3>
+</pre><hr/><hr/>
+<h3>6.自动装配</h3>
 <pre>
 	自动装配: 只声明 bean, 而把 bean 之间的关系交给 IOC 容器来完成 
 	byType: 根据类型进行自动装配. 但要求 IOC 容器中只有一个类型对应的 bean, 若有多个则无法完成自动装配.
 	byName: 若属性名和某一个 bean 的 id 名一致, 即可完成自动装配. 若没有 id 一致的, 则无法完成自动装配
 	在使用 XML 配置时, 自动转配用的不多. 但在基于 注解 的配置时, 自动装配使用的较多.
-</pre>
-<h3>继承 Bean 配置</h3>
+</pre><hr/><hr/>
+<h3>7.继承 Bean 配置</h3>
 	<b>可以忽略父 Bean 的 class 属性, 让子 Bean 指定自己的类, 而共享相同的属性配置. 但此时 abstract 必须设为 true</b>
 	<b>父 Bean 可以作为配置模板, 也可以作为 Bean 实例. 若只想把父 Bean 作为模板, 可以设置 &lt;bean> 的abstract 属性为 true, 
 	这样 Spring 将不会实例化这个 Bean</b>
@@ -160,4 +159,5 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 	    &lt;property name="name" value="override"/>  
 	    &lt;!-- the age property value of 1 will be inherited from parent -->  
 	&lt;/bean>  
-</pre>
+</pre><hr/><hr/>
+<h3>8
