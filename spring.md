@@ -131,3 +131,28 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 	在使用 XML 配置时, 自动转配用的不多. 但在基于 注解 的配置时, 自动装配使用的较多.
 </pre>
 <h3>继承 Bean 配置</h3>
+<pre>
+	<b>可以忽略父 Bean 的 class 属性, 让子 Bean 指定自己的类, 而共享相同的属性配置. 但此时 abstract 必须设为 true</b>
+	<b>父 Bean 可以作为配置模板, 也可以作为 Bean 实例. 若只想把父 Bean 作为模板, 可以设置 &lt;bean> 的abstract 属性为 true, 这样 Spring 将不会实例化这个 Bean</b>
+	&lt;bean id="father" abstract="true"> 
+	    &lt;property name="name" value="parent"/>  
+	    &lt;property name="age" value="1"/>  
+	&lt;/bean>  
+	&lt;bean id="son" class="org.springframework.beans.DerivedTestBean" parent="father" init-method="initialize">  
+	    &lt;property name="name" value="override"/>  
+	    &lt;!-- age will inherit the value of 1 from the parent bean definition-->  
+	&lt;/bean>  
+	
+	&lt;bean id="inheritedTestBean" abstract="true" class="org.springframework.beans.TestBean">  
+	    &lt;property name="name" value="parent"/>  
+	    &lt;property name="age" value="1"/>  
+	&lt;/bean>  
+	&lt;bean id="inheritsWithDifferentClass" class="org.springframework.beans.DerivedTestBean" parent="inheritedTestBean" init-method="initialize">  
+	    &lt;property name="name" value="override"/>  
+	    &lt;!-- the age property value of 1 will be inherited from parent -->  
+	&lt;/bean>  
+	&lt;bean id="inheritsWithSameClass" parent="inheritedTestBean" init-method="initialize">  
+	    &lt;property name="name" value="override"/>  
+	    &lt;!-- the age property value of 1 will be inherited from parent -->  
+	&lt;/bean>  
+</pre>
