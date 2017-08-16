@@ -268,7 +268,7 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 	&lt;/bean>
 </pre><hr/>
 <h4>实现 FactoryBean 接口在 Spring IOC 容器中配置 Bean</h4>
-<a href="https://github.com/hz-zhangfc/javaweb/blob/master/spring/spring_bean/sr/cn/zhangfc/getbean">代码详见</a>
+<a href="https://github.com/hz-zhangfc/javaweb/tree/master/spring/spring_bean/src/cn/zhangfc/getbean">代码详见</a>
 <ul>
 	<li>Spring 中有两种类型的 Bean, 一种是普通Bean, 另一种是工厂Bean, 即FactoryBean. </li>
 	<li>工厂 Bean 跟普通Bean不同, 其返回的对象不是指定类的一个实例, 其返回的是该工厂 Bean 的 getObject 方法所返回的对象 </li>
