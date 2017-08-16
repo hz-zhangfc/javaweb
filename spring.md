@@ -160,4 +160,55 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 	    &lt;!-- the age property value of 1 will be inherited from parent -->  
 	&lt;/bean>  
 </pre><hr/><hr/>
-<h3>8
+<h3>8.依赖 Bean 配置</h3>
+<ul>
+	<li><strong>Spring 允许用户通过 depends-on 属性设定 Bean 前置依赖的Bean，前置依赖的 Bean 会在本 Bean 实例化之前创建好</strong></li>
+	<li><strong>如果前置依赖于多个 Bean，则可以通过逗号，空格或的方式配置 Bean 的名称</strong></li>
+</strong>
+<ul>
+<pre>
+	&lt;bean id="user6" parent="user" p:userName="维多利亚">&lt;/bean>
+	&lt;!-- 测试 depents-on -->	
+	&lt;bean id="user5" parent="user" p:userName="Backham" depends-on="user6">&lt;/bean>
+</pre><hr/><hr/>
+<h3>9.Bean 的作用域</h3>
+<ul>
+	<li>prototype: 原型的. 每次调用 getBean 方法都会返回一个新的 bean. 且在第一次调用 getBean 方法时才创建实例</li>
+	<li>singleton: 单例的. 每次调用 getBean 方法都会返回同一个 bean. 且在 IOC 容器初始化时即创建 bean 的实例. 默认值</li>
+</ul>
+<pre>
+	&lt;bean id="dao2" class="com.atguigu.spring.ref.Dao" scope="prototype">&lt;/bean>
+</pre><hr/><hr/>
+<h3>10.使用外部属性文件</h3>
+<pre>
+	配置文件中的数据
+	jdbc.user=root
+	jdbc.password=1230
+	jdbc.driverClass=com.mysql.jdbc.Driver
+	jdbc.jdbcUrl=jdbc:mysql:///test
+	jdbc.initPoolSize=5
+	jdbc.maxPoolSize=10
+ 	&lt;!--导入外部的资源文件，classpath相当于eclipsed src目录下 -->
+	&lt;context:property-placeholder location="classpath:db.properties"/>
+	&lt;!-- 配置数据源 -->
+	&lt;bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		&lt;property name="user" value="${jdbc.user}">&lt;/property>
+		&lt;property name="password" value="${jdbc.password}">&lt;/property>
+		&lt;property name="driverClass" value="${jdbc.driverClass}">&lt;/property>
+		&lt;property name="jdbcUrl" value="${jdbc.jdbcUrl}">&lt;/property>
+		&lt;property name="initialPoolSize" value="${jdbc.initPoolSize}">&lt;/property>
+		&lt;property name="maxPoolSize" value="${jdbc.maxPoolSize}">&lt;/property>
+	&lt;/bean>
+</pre><hr/><hr/>
+<h3>11.Spring表达式语言：SpEL</h3>
+<ul>
+	<li>Spring 表达式语言（简称SpEL）：是一个支持运行时查询和操作对象图的强大的表达式语言。</li>
+	<li>语法类似于 EL：SpEL 使用 #{…} 作为定界符，所有在大框号中的字符都将被认为是 SpEL</li>
+	<li>SpEL 为 bean 的属性进行动态赋值提供了便利</li>
+	<li><pre>通过 SpEL 可以实现：
+				通过 bean 的 id 对 bean 进行引用
+				调用方法以及引用对象中的属性
+				计算表达式的值
+				正则表达式的匹配</pre></li>
+
+</ul>
