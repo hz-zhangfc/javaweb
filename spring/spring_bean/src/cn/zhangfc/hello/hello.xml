@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!--  1.hell0Spring-->
@@ -21,4 +22,21 @@
 		<constructor-arg value="22" index="1" ></constructor-arg>
 		<constructor-arg value="男" index="2" ></constructor-arg>
 	</bean>
+	
+	<!-- 4.spel  -->
+	<!--引用其他对象  -->
+	<bean name="car1" class="cn.zhangfc.hello.Car">
+		<property name="name" value="car1"></property>
+		<property name="price" value="10000"></property>
+	</bean>
+	<!-- 引用其他bean -->
+	<bean name="person3" class="cn.zhangfc.hello.Person" 
+	p:car="#{car1}" p:name="张三" p:age="14" p:sex="男"></bean>
+	
+	<bean name="person4" class="cn.zhangfc.hello.Person" 
+	p:name="#{person3.name}" p:age="#{person3.getAge()}"
+	 p:sex="#{person3.getSex().toString()}"/>
+	 <!-- 静态方法或属性 -->
+	 <bean name="person5" class="cn.zhangfc.hello.Person" 
+	 p:age="#{T(java.lang.Math).PI}" ></bean>
 </beans>

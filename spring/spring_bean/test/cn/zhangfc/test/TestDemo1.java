@@ -48,4 +48,18 @@ public class TestDemo1 extends Test0 {
 		sop(p1);
 		sop(p2);
 	}
+	
+	/**
+	 * 4
+	 */
+	@Test
+	public void test3()
+	{
+		Person p1 = (Person) super.context.getBean("person3");
+		Person p2 = (Person) super.context.getBean("person4");
+		Person p3 = (Person) super.context.getBean("person5");
+		sop(p1);
+		sop(p2);
+		sop(p3);
+	}
 }

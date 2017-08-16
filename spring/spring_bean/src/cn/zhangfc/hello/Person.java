@@ -4,7 +4,13 @@ public class Person {
 	private String name;
 	private int age;
 	private String sex;
-	
+	private Car car;
+	public Car getCar() {
+		return car;
+	}
+	public void setCar(Car car) {
+		this.car = car;
+	}
 	public Person() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -35,7 +41,7 @@ public class Person {
 	}
 	@Override
 	public String toString() {
-		return "Person [name=" + name + ", age=" + age + ", sex=" + sex + "]";
+		return "Person [name=" + name + ", age=" + age + ", sex=" + sex + ", car=" + car + "]";
 	}
 	
 }
