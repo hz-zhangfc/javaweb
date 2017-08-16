@@ -237,4 +237,8 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 	<b>调用静态方法或静态属性</b>
 	<b>通过 T() 调用一个类的静态方法，它将返回一个 Class Object，然后再调用相应的方法或属性</b>
 	p:age="#{T(java.lang.Math).PI}" 
-</pre>
+</pre><hr/>
+<h4>SpEL支持的运算符号</h4>
+<image src="https://github.com/hz-zhangfc/javaweb/blob/master/spring/images/3.PNG"/>
+<image src="https://github.com/hz-zhangfc/javaweb/blob/master/spring/images/4.PNG"/>
+<hr/>
