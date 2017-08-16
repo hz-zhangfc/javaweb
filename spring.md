@@ -242,7 +242,7 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 <image src="https://github.com/hz-zhangfc/javaweb/blob/master/spring/images/3.PNG"/>
 <image src="https://github.com/hz-zhangfc/javaweb/blob/master/spring/images/4.PNG"/>
 <hr/><hr/>
-<h3>其他创建bean的方式</h3>
+<h3>11.其他创建bean的方式</h3>
 <h4>通过调用静态工厂方法创建 Bean</h4>
 <pre>
  	 &lt;!-- 通过工厂方法的方式来配置 bean -->
@@ -272,4 +272,19 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 <ul>
 	<li>Spring 中有两种类型的 Bean, 一种是普通Bean, 另一种是工厂Bean, 即FactoryBean. </li>
 	<li>工厂 Bean 跟普通Bean不同, 其返回的对象不是指定类的一个实例, 其返回的是该工厂 Bean 的 getObject 方法所返回的对象 </li>
+</ul><hr/><hr/>
+<h3>IOC 容器中 Bean 的生命周期</h3>
+<strong>从出生到死亡的一系列事</strong>
+<b>看看在这个过程中哪个步骤干点什么，有利于我们</b>
+<ul>
+	<li>Spring IOC 容器对 Bean 的生命周期进行管理的过程:
+	<ol>
+		<li>通过构造器或工厂方法创建 Bean 实例<b>(调用其构造函数)</b></li>
+		<li>为 Bean 的属性设置值和对其他 Bean 的引用<b>(调用其set方法)</b></li>
+		<li>调用 Bean 的初始化方法</li>
+		<li>Bean 可以使用了</li>
+		<li>当容器关闭时, 调用 Bean 的销毁方法</li>	
+		</ol></li>
+	<li>在 Bean 的声明里设置 init-method 和 destroy-method 属性, 为 Bean 指定初始化和销毁方法.</li>
 </ul>
+<a href="https://github.com/hz-zhangfc/javaweb/tree/master/spring/spring_bean/src/cn/zhangfc/beanlife">参见资料</a>
