@@ -8,6 +8,7 @@
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
 		<config>src/cn/zhangfc/hello/hello.xml</config>
+		<config>src/cn/zhangfc/getbean/getBean.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

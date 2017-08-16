@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 通过工厂方法的方式来配置 bean -->
+	<!-- 1. 通过静态工厂方法: 一个类中有一个静态方法, 可以返回一个类的实例(了解) -->
+	<!-- 在 class 中指定静态工厂方法的全类名, 在 factory-method 中指定静态工厂方法的方法名 -->
+	<bean id="pen1" class="cn.zhangfc.getbean.StaticFactoryBean" factory-method="getPen">
+	<!-- 可以通过 constructor-arg 子节点为静态工厂方法指定参数 -->
+		<constructor-arg value="pen1" index="1"></constructor-arg>
+		<constructor-arg value="1" index="0"></constructor-arg>
+	</bean>
+	<!-- 2. 实例工厂方法: 先需要创建工厂对象, 再调用工厂的非静态方法返回实例(了解) -->
+	<!-- ①. 创建工厂对应的 bean -->
+	<bean id="instanceFactory" class="cn.zhangfc.getbean.InstanceFactoryBean">
+		<constructor-arg value="dd"></constructor-arg>
+	</bean>
+	<!-- ②. 有实例工厂方法来创建 bean 实例 -->
+	<!-- factory-bean 指向工厂 bean, factory-method 指定工厂方法(了解) -->
+	<bean id="pen2" factory-bean="instanceFactory" factory-method="getPen">
+	<!-- 通过 constructor-arg 执行调用工厂方法需要传入的参数 -->
+		<constructor-arg value="pen2"></constructor-arg>
+	</bean>
+	
+	<bean id="pen3" class="cn.zhangfc.getbean.MyPenBeanFactory"></bean>
+</beans>
