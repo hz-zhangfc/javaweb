@@ -361,8 +361,8 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 </pre>
 </hr>
 <h4>使用 @Autowired 自动装配 Bean</h4>
-<ima src="https://github.com/hz-zhangfc/javaweb/raw/master/spring/images/6.PNG"/>
-<ima src="https://github.com/hz-zhangfc/javaweb/raw/master/spring/images/7.PNG"/>
+<img src="https://github.com/hz-zhangfc/javaweb/raw/master/spring/images/6.PNG"/>
+<img src="https://github.com/hz-zhangfc/javaweb/raw/master/spring/images/7.PNG"/>
 <pre>
 	<b>只要有参数</b>
 	方法上
@@ -379,3 +379,4 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 <a href="https://github.com/hz-zhangfc/javaweb/tree/master/spring/spring_bean/src/cn/zhangfc/scan" >参见代码</a>
 <hr/><hr/>
 <h3>14.泛型依赖注入</h3>
+<strong>泛型继承</strong>
