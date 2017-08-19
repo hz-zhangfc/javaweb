@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="lib/spring-context-4.0.0.RELEASE.jar" sourcepath="G:/学习资料/spring/spring-framework-4.0.0.RC2.zip"/>
 	<classpathentry kind="lib" path="lib/spring-core-4.0.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-expression-4.0.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-aop-4.0.0.RELEASE.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

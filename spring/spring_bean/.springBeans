@@ -10,6 +10,8 @@
 		<config>src/cn/zhangfc/hello/hello.xml</config>
 		<config>src/cn/zhangfc/getbean/getBean.xml</config>
 		<config>src/cn/zhangfc/beanlife/beanLife.xml</config>
+		<config>src/cn/zhangfc/beanpostprocessor/beanpostprocessor.xml</config>
+		<config>src/cn/zhangfc/scan/scan.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
