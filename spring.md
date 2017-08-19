@@ -309,7 +309,7 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 </pre>
 <a href="https://github.com/hz-zhangfc/javaweb/tree/master/spring/spring_bean/src/cn/zhangfc/beanpostprocessor">参见代码</a>
 <hr/><hr/>
-<h3>在 classpath 中扫描组件</h3>
+<h3>13.在 classpath 中扫描组件</h3>
 <ol>
 	<li>在配置文件中配置：&lt;context:component-scan> </li>
 	<li>在要被spring容器管理的类上加相应的注解</li>
@@ -338,5 +338,44 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 <b>&lt;context:include-filter> 子节点表示要包含的目标类</b>
 <b>&lt;context:exclude-filter> 子节点表示要排除在外的目标类</b>
 <b>&lt;context:component-scan> 下可以拥有若干个 &lt;context:include-filter> 和 &lt;context:exclude-filter> 子节点</b>
-
-
+<img src="https://github.com/hz-zhangfc/javaweb/raw/master/spring/images/5.PNG"/>
+<pre>
+	<strong>如：</strong>
+	 &lt;context:component-scan base-package="cn.zhangfc.scan" >
+		&lt;context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+	&lt;/context:component-scan>
+ 	scan包及其子包里，所有被@Repository表示的类将被排除在外，不被容器控制。这里只是一个例子
+	这个注解是任意的（可以自定义），只要你在expression配置了它。
+</pre>
+<strong>一个注意点</strong>
+<pre>
+	&lt;context:component-scan base-package="cn.zhangfc.scan" use-default-filters="false">
+		&lt;context:include-filter type="annotation" expression="cn.zhangfc.scan.MyAnnotation"/>
+	&lt;/context:component-scan>
+	对应的类
+	@MyAnnotation   //看到没，就是这个东西
+	@Component
+	public class MyComponent {
+	<strong>incude-filter要结合use-default-filters属性，不然所有加了spring注解的还是会被控制，设为false之后，只有@Repository
+	才会被扫描进去</strong>
+</pre>
+</hr>
+<h4>使用 @Autowired 自动装配 Bean</h4>
+<ima src="https://github.com/hz-zhangfc/javaweb/raw/master/spring/images/6.PNG"/>
+<ima src="https://github.com/hz-zhangfc/javaweb/raw/master/spring/images/7.PNG"/>
+<pre>
+	<b>只要有参数</b>
+	方法上
+	@Autowired
+	public void setMyService(@Qualifier("myService") MyService myService) {
+		this.myService = myService;
+	}
+	属性上
+	@Autowired(required=true)
+	@Qualifier(value="myRespository")
+	private  MyRespository respository;
+	
+</pre>
+<a href="https://github.com/hz-zhangfc/javaweb/tree/master/spring/spring_bean/src/cn/zhangfc/scan" >参见代码</a>
+<hr/><hr/>
+<h3>14.泛型依赖注入</h3>
