@@ -5,8 +5,15 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<context:component-scan base-package="cn.zhangfc.scan" >
+	<!-- <context:component-scan base-package="cn.zhangfc.scan"  >
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
-	</context:component-scan>
+	</context:component-scan> -->
 
+<!--  context:include-filter要和use-default-filters="false"一起
+	<context:component-scan base-package="cn.zhangfc.scan" use-default-filters="false">
+		<context:include-filter type="annotation" expression="cn.zhangfc.scan.MyAnnotation"/>
+	</context:component-scan>
+	-->
+	<context:component-scan base-package="cn.zhangfc.scan" />
+	
 </beans>

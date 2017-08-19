@@ -16,12 +16,12 @@ public class TestScan extends Test0 {
 	public void test()
 	{
 		MyComponent component = (MyComponent) get("myComponent");
-		MyService service = (MyService) get("myServiceImpl");
-		//MyRespository respository = (MyRespository) get("myRespository");
+		MyService service = (MyService) get("myService");
+		MyRespository respository = (MyRespository) get("myRespository");
 		MyController controller = (MyController) get("myController");
 		sop(component);
 		sop(service);
-		//sop(respository);
+		sop(respository);
 		sop(controller);
 	}
 }
