@@ -273,7 +273,7 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 	<li>Spring 中有两种类型的 Bean, 一种是普通Bean, 另一种是工厂Bean, 即FactoryBean. </li>
 	<li>工厂 Bean 跟普通Bean不同, 其返回的对象不是指定类的一个实例, 其返回的是该工厂 Bean 的 getObject 方法所返回的对象 </li>
 </ul><hr/><hr/>
-<h3>IOC 容器中 Bean 的生命周期</h3>
+<h3>12.IOC 容器中 Bean 的生命周期</h3>
 <strong>从出生到死亡的一系列事</strong>
 <b>看看在这个过程中哪个步骤干点什么，有利于我们</b>
 <ul>
@@ -288,3 +288,55 @@ new-->other-->输入spring关键字-->选择spring bean configure file<storng>�
 	<li>在 Bean 的声明里设置 init-method 和 destroy-method 属性, 为 Bean 指定初始化和销毁方法.</li>
 </ul>
 <a href="https://github.com/hz-zhangfc/javaweb/tree/master/spring/spring_bean/src/cn/zhangfc/beanlife">参见资料</a>
+<hr>
+<h4>添加 Bean 后置处理器后 Bean 的生命周期</h4>
+<ol>
+	<li>通过构造器或工厂方法创建 Bean 实例<b>(调用其构造函数)</b></li>
+	<li>为 Bean 的属性设置值和对其他 Bean 的引用<b>(调用其set方法)</b></li>
+	<li><b>将 Bean 实例传递给 Bean 后置处理器的 postProcessBeforeInitialization 方法</b></li>
+	<li>调用 Bean 的初始化方法</li>
+	<li><b>将 Bean 实例传递给 Bean 后置处理器的 postProcessAfterInitialization方法</b></li>
+	<li>Bean 可以使用了</li>
+	<li>当容器关闭时, 调用 Bean 的销毁方法</li>	
+</ol>
+<ol>
+	<li>写一个类实现BeanPostProcessor，实现其中的前置后置方法</li>
+	<li>在xml文件中注册</li>
+</ol>
+<pre>
+	&lt;!-- 配置 bean 后置处理器: 不需要配置 id 属性, IOC 容器会识别到他是一个 bean 后置处理器, 并调用其方法 -->
+	&lt;bean class="cn.zhangfc.beanpostprocessor.MyBeanPostProcessor">&lt;/bean>
+</pre>
+<a href="https://github.com/hz-zhangfc/javaweb/tree/master/spring/spring_bean/src/cn/zhangfc/beanpostprocessor">参见代码</a>
+<hr/><hr/>
+<h3>在 classpath 中扫描组件</h3>
+<ol>
+	<li>在配置文件中配置：&lt;context:component-scan> </li>
+	<li>在要被spring容器管理的类上加相应的注解</li>
+</ol>
+<h4>注解</h4>
+<ul>
+	特定组件包括:<b>这几个东西最主要是规范用的，可以混用报错但不建议</b>
+	<li>@Component: 基本注解, 标识了一个受 Spring 管理的组件</li>
+	<li>@Respository: 标识持久层组件</li>
+	<li>@Service: 标识服务层(业务层)组件</li>
+	<li>@Controller: 标识表现层组件</li>
+</ul>
+对于扫描到的组件, Spring 有默认的命名策略: <br/>
+&nbsp;&nbsp;使用非限定类名, 第一个字母小写. <b>如：类名叫UserDao,那么在配置中就相当于id="userDao"</b><br/>
+&nbsp;&nbsp;也可以在注解中通过 value 属性值标识组件的名称.<b>如：UserDao("haha")==>id="haha"</b>
+<hr/>
+<h4>xml中配置扫描</h4>
+<pre>
+	&lt;context:component-scan base-package="cn.zhangfc.scan" 
+	resource-pattern="service/*.class"/>
+	<b>base-package 属性指定一个需要扫描的基类包，Spring 容器将会扫描这个基类包里及其子包中的所有类</b>
+	<b>当需要扫描多个包时, 可以使用逗号分隔</b>
+	<b>如果仅希望扫描特定的类而非基包下的所有类，可使用 resource-pattern 属性过滤特定的类</b>
+	<b>如：只管理scan子包service包下所有class文件</b>
+</pre>
+<b>&lt;context:include-filter> 子节点表示要包含的目标类</b>
+<b>&lt;context:exclude-filter> 子节点表示要排除在外的目标类</b>
+<b>&lt;context:component-scan> 下可以拥有若干个 &lt;context:include-filter> 和 &lt;context:exclude-filter> 子节点</b>
+
+
