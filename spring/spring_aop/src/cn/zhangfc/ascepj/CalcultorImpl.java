@@ -7,7 +7,7 @@ public class CalcultorImpl  implements Calcultor{
 
 	@Override
 	public int add(int a, int b) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stu
 		return a+b;
 	}
 
@@ -15,6 +15,12 @@ public class CalcultorImpl  implements Calcultor{
 	public int sub(int a, int b) {
 		// TODO Auto-generated method stub
 		return a-b;
+	}
+
+	@Override
+	public double div(int a, int b) {
+		// TODO Auto-generated method stub
+		return a/b;
 	}
 
 }
