@@ -1,0 +1,1428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0056)http://blog.csdn.net/u010837612/article/details/45583581 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+            <link rel="canonical" href="http://blog.csdn.net/u010837612/article/details/45583581"> 
+
+   
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="http://blog.csdn.net/u010837612/article/details/45583581#">
+
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+       
+    <title>spring学习笔记（16）——AOP之前后置通知 - 君君的专栏
+        - CSDN博客</title>
+    
+    <meta name="description" content="前置通知本文接上一篇spring学习笔记（15）——AOP基础为了更好的解决上次说的问题，我们使用AOP先加入jar包 package com.zj.asceptj;public interface Calcultor {    int add(int a, int b);    int sub(int a, int b);}package com.zj.asceptj;import or">
+
+    <meta name="keywords" content="spring">
+
+   
+    <script src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/hm.js.下载"></script><script src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/blog_static_head.min.js.下载" type="text/javascript"></script>
+
+    
+        <!--new top-->
+       
+       
+        <!--new top-->
+    
+      <!-- ad begin -->
+         
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/style.css">
+
+    
+
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/u010837612/rss/list">
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/default.css">
+ 
+
+
+
+    <link href="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/csdn_public_blog_detail.min.css" type="text/css" rel="stylesheet">
+     
+         <link rel="stylesheet" href="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/csdn_blog_detail.min.css">
+
+  
+
+
+    <!-- 请置于所有广告位代码之前 --> 
+            <script src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/ds.js.下载"></script>
+
+<script src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/share.js.下载"></script><link href="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/bdsstyle.css" rel="stylesheet" type="text/css"><script src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/wxLogin.js.下载"></script><link rel="stylesheet" type="text/css" href="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/style(1).css"><link type="text/css" rel="stylesheet" href="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/style(2).css"><script src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/logger.js.下载"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link rel="stylesheet" href="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/share_style0_16.css"></head>
+
+
+<body><div id="BAIDU_DUP_fp_wrapper" style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;"><iframe id="BAIDU_DUP_fp_iframe" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/o.html" style="width: 0px; height: 0px; visibility: hidden; display: none;"></iframe></div><div id="MathJax_Message" style="display: none;"></div><iframe frameborder="0" style="display: none;" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/saved_resource.html"></iframe><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://blog.csdn.net/?ref=toolbar_logo" class="img blog-icon"></a></div>          <div class="pull-right login-wrap unlogin">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="http://passport.csdn.net/account/mobileregister?ref=toolbar&amp;action=mobileRegister">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" id="toolbar_search" method="get" target="_blank">                      <input type="hidden" value="toolbar" name="ref" accesskey="2">                      <div class="border">                        <input placeholder="搜索" type="text" value="" name="q" accesskey="2"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label"><span class="red_txt">*</span>标题</label>                          <div class="col-sm-10">                            <input id="inputTitle" type="text" placeholder="" class="title form-control">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group" style="display:none;">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input id="input-url" type="text" placeholder="" class="url form-control">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" type="text" class="form-control tag">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">位置</label>                        <div class="col-sm-10">                          <div class="my_lib_box">                            个人主页&nbsp;-&nbsp;<a href="http://my.csdn.net/" target="_blank">我的知识</a>                          </div>                          <div class="checkbox">                            <div class="pull-left">                              <label>                                <input type="checkbox" name="share" class="save_lib_map" checked="checked">同时保存至：                              </label>                            </div>                            <div class="pull-left">                              <div class="dropdown">                                <button id="toolbar_sele_map" type="button">                                  选择知识图谱                                  <i class="fa fa-chevron-down"></i>                                </button>                                <div class="top_arr"></div>                                <div class="outside">                                  <ul class="dropdown-menu" id="toolbar_Design_knowledge"><li>选择知识图谱</li></ul>                                </div>                              </div>                            </div>                            <div class="pull-left new_txt">                              <a href="http://lib.csdn.net/my/create/structure" target="_blank">新建？</a>                            </div>                          </div>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left" style="display:none">                            <div class="checkbox">                              <label>                                <input type="checkbox" name="share" checked="checked" class="share">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display:none" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note">                      <div class="box"></div>                    <iframe src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/saved_resource(1).html" frameborder="0" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix" style="display:none;"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt style="border: none;"><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/100x100.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/100x100.jpg"></a></dt>                        <dd class="info" style="border: none;"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname"></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-left" style="margin-left:132px; width:18px; height:27px; white-space:nowrap; overflow:hidden;"><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div id="chasnew123" class="hasnew" style="display: none;"></div>                <div id="cappsarea123" class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd> <a href="http://lib.csdn.net/?ref=toolbar" target="_blank">知识库</a></dd>                      <dd><a href="http://ask.csdn.net/?ref=toolbar" target="_blank">技术问答</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                      <dd style="display:none"> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd style="display:none"> <a href="http://job.csdn.net/?ref=toolbar" target="_blank">JOB<img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="http://edu.csdn.net/?ref=toolbar" target="_blank">学院<img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                      <dd> <a href="http://mall.csdn.net/?ref=toolbar" target="_blank">C币兑换<img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/new.gif" style="display: none; margin-top: -26px; width: 23px;"></a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://cto.csdn.net/?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+     
+        <div class="tracking-ad" data-view="true" data-mod="ad_popu_72" data-mtp="62" data-order="40" data-con="ad_content_2072">
+                     <script id="popuLayer_js_q" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/popuLayer.js.下载" defer="defer" type="text/javascript"></script>
+                <div id="layerd" style="position: fixed; bottom: 0px; right: 0px; line-height: 0px; z-index: 1000; width: 300px; height: 278px;">
+    	                <div class="J_close layer_close" style="display:;background-color:#efefef;padding:0px;color:#333;font:12px/24px Helvetica,Tahoma,Arial,sans-serif;text-align:right;">关闭</div><!-- 广告占位容器 --><div id="cpro_u2895327"><iframe id="iframeu2895327_0" name="iframeu2895327_0" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/ncym.html" width="300" height="250" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0;vertical-align:bottom;margin:0;width:300px;height:250px" allowtransparency="true"></iframe></div></div>
+                <script>  document.getElementById("popuLayer_js_q").onload = function () { var styObjd = styObj = { width: "300px", "height": parseInt(250) + 28 }; window.CSDN.Layer.PopuLayer("#layerd", { storageName: "layerd", styleObj: styObjd, total: 50, expoire: 1000 * 60 }); }</script><!-- 投放代码 --><script type="text/javascript">                    /*服务器频道首页置顶Banner960*90，创建于2014-7-3*/    (window.cproArray = window.cproArray || []).push({ id: "u2895327" });  </script>  <script src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/c.js.下载" type="text/javascript"></script>
+     
+        </div>
+
+    <!-- 广告位开始 -->
+        
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/html.js.下载" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/u010837612">君君的专栏</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/u010837612?viewmode=contents"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_mulu&#39;])">
+                    <img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/u010837612?viewmode=list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_zhaiyao&#39;])">
+                    <img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/u010837612/rss/list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_RSS&#39;])">
+                    <img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/ico_rss.gif">订阅</span></a></li>                
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "u010837612";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/u010837612";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod="popu_3"> 
+
+
+<a href="http://blog.csdn.net/epubit17/article/details/76811996" target="_blank">
+<font color="red"><strong>赠书 | 异步2周年,技术图书免费选</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<a href="http://blog.csdn.net/turingbooks/article/details/77479427" target="_blank">
+<font color="blue"><strong>程序员8月书讯</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+<a href="https://gitee.com/enterprises?from=csdn-sqbkxq" target="_blank">
+<font color="red"><strong>项目管理+代码托管+文档协作，开发更流畅</strong></font></a>
+
+</div>                        </div>
+
+                        
+
+
+
+  
+
+
+
+
+
+
+<script type="text/javascript" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/category.js.下载"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+      var isBole = false; 
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=spring%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%ef%bc%8816%ef%bc%89%e2%80%94%e2%80%94AOP%e4%b9%8b%e5%89%8d%e5%90%8e%e7%bd%ae%e9%80%9a%e7%9f%a5&u=http://blog.csdn.net/u010837612/article/details/45583581"
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+    <h1>
+        <span class="link_title"><a href="http://blog.csdn.net/u010837612/article/details/45583581">
+        spring学习笔记（16）——AOP之前后置通知        
+           
+        </a>
+        </span>
+
+         
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href="http://www.csdn.net/tag/spring" target="_blank" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_tag&#39;]);">spring</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2015-05-08 18:23</span>
+            <span class="link_view" title="阅读次数">940人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="http://blog.csdn.net/u010837612/article/details/45583581#comments" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_pinglun&#39;])">评论</a>(1)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle(&#39;spring%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%ef%bc%8816%ef%bc%89%e2%80%94%e2%80%94AOP%e4%b9%8b%e5%89%8d%e5%90%8e%e7%bd%ae%e9%80%9a%e7%9f%a5&#39;,&#39;45583581&#39;);return false;" title="收藏" target="_blank">收藏</a></span>
+             <span class="link_report"> <a href="http://blog.csdn.net/u010837612/article/details/45583581#report" onclick="javascript:report(45583581,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label onclick="GetCategoryArticles(&#39;3160277&#39;,&#39;u010837612&#39;,&#39;top&#39;,&#39;45583581&#39;);">
+                        <span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_fenlei&#39;]);">spring4<em>（26）</em></span>
+                      <img class="arrow-down" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a href="http://blog.csdn.net/u010837612/article/category/3160277" target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_3160277">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+        <div class="bog_copyright">         
+            <p class="copyright_p">版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+        </div>
+
+  
+
+  
+  
+     
+
+
+<div style="clear:both"></div><div style="border:solid 1px #ccc; background:#eee; float:left; min-width:200px;padding:4px 10px;"><p style="text-align:right;margin:0;"><span style="float:left;">目录<a href="http://blog.csdn.net/u010837612/article/details/45583581#" title="系统根据文章中H1到H6标签自动生成文章目录">(?)</a></span><a href="http://blog.csdn.net/u010837612/article/details/45583581#" onclick="javascript:return openct(this);" title="展开">[+]</a></p><ol style="display:none;margin-left:14px;padding-left:14px;line-height:160%;"><li><a href="http://blog.csdn.net/u010837612/article/details/45583581#t0">前置通知</a></li><li><a href="http://blog.csdn.net/u010837612/article/details/45583581#t1">后置通知</a></li></ol></div><div style="clear:both"></div><div id="article_content" class="article_content tracking-ad" data-mod="popu_307" data-dsm="post">
+        <div class="markdown_views"><h1 id="前置通知"><a name="t0" target="_blank"></a>前置通知</h1>
+
+<p>本文接上一篇<a href="http://blog.csdn.net/u010837612/article/details/45583059" target="_blank">spring学习笔记（15）——AOP基础</a></p>
+
+<p>为了更好的解决上次说的问题，我们使用AOP</p>
+
+<p>先加入jar包 <br>
+<img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/20150508180632257" alt="这里写图片描述" title=""></p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs cs has-numbering">package com.zj.asceptj;
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> Calcultor {
+    <span class="hljs-keyword">int</span> add(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b);
+    <span class="hljs-keyword">int</span> sub(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b);
+}
+</code><ul class="pre-numbering" style="opacity: 0;"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul><div class="save_code tracking-ad" data-mod="popu_249" style="display: none;"><a href="javascript:;" target="_blank"><img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/save_snippets.png"></a></div><ul class="pre-numbering" style=""><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li></ul></pre>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs java has-numbering"><span class="hljs-keyword">package</span> com.zj.asceptj;
+
+<span class="hljs-keyword">import</span> org.springframework.stereotype.Component;
+
+<span class="hljs-annotation">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CalcultorImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Calcultor</span>{</span>
+
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">add</span>(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b) {
+        <span class="hljs-keyword">int</span> result = a + b;
+        <span class="hljs-keyword">return</span> result;
+    }
+
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sub</span>(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b) {
+        <span class="hljs-keyword">int</span> result = a - b;
+        <span class="hljs-keyword">return</span> result;
+    }
+
+}
+</code><ul class="pre-numbering" style="opacity: 0;"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li></ul><div class="save_code tracking-ad" data-mod="popu_249" style="display: none;"><a href="javascript:;" target="_blank"><img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/save_snippets.png"></a></div><ul class="pre-numbering" style=""><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li></ul></pre>
+
+<blockquote>
+  <p>记得给是实现类加上注解，让IOC容器管理</p>
+</blockquote>
+
+<p>我们现在的要求是，给计算器加上日志： <br>
+- 方法调用前，打印出日志 <br>
+- 方法调用后，打印出日志</p>
+
+<p>写一个日志切面</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs java has-numbering"><span class="hljs-keyword">package</span> com.zj.asceptj;
+
+<span class="hljs-keyword">import</span> java.util.Arrays;
+<span class="hljs-keyword">import</span> java.util.List;
+
+<span class="hljs-keyword">import</span> org.aspectj.lang.JoinPoint;
+<span class="hljs-keyword">import</span> org.aspectj.lang.annotation.Aspect;
+<span class="hljs-keyword">import</span> org.aspectj.lang.annotation.Before;
+<span class="hljs-keyword">import</span> org.springframework.stereotype.Component;
+<span class="hljs-javadoc">/**
+ * 声明该类为切面:
+ *    1.让IOC容器创建这个类的bean(@Component)
+ *    2.声明为切面(@Aspect)
+ */</span>
+<span class="hljs-annotation">@Aspect</span>
+<span class="hljs-annotation">@Component</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LoggingAscept</span> {</span>
+    <span class="hljs-comment">//声明这是一个前置通知</span>
+    <span class="hljs-annotation">@Before</span>(<span class="hljs-string">"execution(public int com.zj.asceptj.Calcultor.add(int, int))"</span>)
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">beforeMethod</span>(JoinPoint joinpoint){
+        <span class="hljs-comment">//注意，JoinPoint来自org.aspectj.lang.JoinPoint，小心导错包</span>
+        <span class="hljs-comment">//方法名</span>
+        String methodName = joinpoint.getSignature().getName();
+        <span class="hljs-comment">//方法参数</span>
+        List&lt;Object&gt; args = Arrays.asList(joinpoint.getArgs());
+        System.out.println(<span class="hljs-string">"method "</span>+methodName+<span class="hljs-string">" begin:"</span>+args);
+    }
+}
+</code><ul class="pre-numbering" style="opacity: 0;"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li></ul><div class="save_code tracking-ad" data-mod="popu_249" style="display: none;"><a href="javascript:;" target="_blank"><img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/save_snippets.png"></a></div><ul class="pre-numbering" style=""><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li></ul></pre>
+
+<blockquote>
+  <p>JoinPoint 参数可以让我们访问到连接点的细节，如果不需要，可以不加</p>
+</blockquote>
+
+<p>在<a href="http://lib.csdn.net/base/javaee" class="replace_word" title="Java EE知识库" target="_blank" style="color:#df3434; font-weight:bold;">spring</a>配置文件中配置</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs xml has-numbering"><span class="hljs-pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">beans</span> <span class="hljs-attribute">xmlns</span>=<span class="hljs-value">"http://www.springframework.org/schema/beans"</span>
+    <span class="hljs-attribute">xmlns:xsi</span>=<span class="hljs-value">"http://www.w3.org/2001/XMLSchema-instance"</span>
+    <span class="hljs-attribute">xmlns:aop</span>=<span class="hljs-value">"http://www.springframework.org/schema/aop"</span>
+    <span class="hljs-attribute">xmlns:context</span>=<span class="hljs-value">"http://www.springframework.org/schema/context"</span>
+    <span class="hljs-attribute">xsi:schemaLocation</span>=<span class="hljs-value">"http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd"</span>&gt;</span>
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">context:component-scan</span> <span class="hljs-attribute">base-package</span>=<span class="hljs-value">"com.zj.asceptj"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">context:component-scan</span>&gt;</span>
+
+    <span class="hljs-comment">&lt;!-- 让aspectJ的注解起作用 --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">aop:aspectj-autoproxy</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-title">aop:aspectj-autoproxy</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-title">beans</span>&gt;</span>
+</code><ul class="pre-numbering" style="opacity: 0;"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li></ul><div class="save_code tracking-ad" data-mod="popu_249" style="display: none;"><a href="javascript:;" target="_blank"><img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/save_snippets.png"></a></div><ul class="pre-numbering" style=""><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li></ul></pre>
+
+<p>main方法</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs java has-numbering"><span class="hljs-keyword">package</span> com.zj.asceptj;
+
+<span class="hljs-keyword">import</span> org.springframework.context.ApplicationContext;
+<span class="hljs-keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Main</span> {</span>
+
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span>(String[] args) {
+        ApplicationContext ctx = <span class="hljs-keyword">new</span> ClassPathXmlApplicationContext(<span class="hljs-string">"applicationContext.xml"</span>);
+        Calcultor calcultor = (Calcultor) ctx.getBean(<span class="hljs-string">"calcultorImpl"</span>);
+        <span class="hljs-keyword">int</span> result = calcultor.add(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
+        System.out.println(result);
+
+    }
+
+}
+</code><ul class="pre-numbering" style="opacity: 0;"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul><div class="save_code tracking-ad" data-mod="popu_249" style="display: none;"><a href="javascript:;" target="_blank"><img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/save_snippets.png"></a></div><ul class="pre-numbering" style=""><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li></ul></pre>
+
+<p>结果 <br>
+<img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/20150508180748326" alt="这里写图片描述" title=""></p>
+
+<p>还有一个问题，我们使用<code>@Before("execution(public int com.zj.asceptj.Calcultor.add(int, int))")</code> 声明了调用哪个方法，如果我们想调用所有方法时这个前置通知都能起作用，要怎么做呢?很简单</p>
+
+<blockquote>
+  <ul>
+  <li><code>@Before("execution(* com.zj.asceptj.*.*(..))")</code></li>
+  <li><code>*</code>号是一个占位符，表示任意字符，大家可以跟原来的写法对比一下</li>
+  </ul>
+</blockquote>
+
+<h1 id="后置通知"><a name="t1" target="_blank"></a>后置通知</h1>
+
+<p>后置通知跟前置通知的用法一模一样，只要把@Before改为@After即可</p>
+
+
+
+<pre class="prettyprint" name="code"><code class="hljs avrasm has-numbering">package <span class="hljs-keyword">com</span><span class="hljs-preprocessor">.zj</span><span class="hljs-preprocessor">.asceptj</span><span class="hljs-comment">;</span>
+
+import java<span class="hljs-preprocessor">.util</span><span class="hljs-preprocessor">.Arrays</span><span class="hljs-comment">;</span>
+import java<span class="hljs-preprocessor">.util</span><span class="hljs-preprocessor">.List</span><span class="hljs-comment">;</span>
+
+import org<span class="hljs-preprocessor">.aspectj</span><span class="hljs-preprocessor">.lang</span><span class="hljs-preprocessor">.JoinPoint</span><span class="hljs-comment">;</span>
+import org<span class="hljs-preprocessor">.aspectj</span><span class="hljs-preprocessor">.lang</span><span class="hljs-preprocessor">.annotation</span><span class="hljs-preprocessor">.After</span><span class="hljs-comment">;</span>
+import org<span class="hljs-preprocessor">.aspectj</span><span class="hljs-preprocessor">.lang</span><span class="hljs-preprocessor">.annotation</span><span class="hljs-preprocessor">.Aspect</span><span class="hljs-comment">;</span>
+import org<span class="hljs-preprocessor">.aspectj</span><span class="hljs-preprocessor">.lang</span><span class="hljs-preprocessor">.annotation</span><span class="hljs-preprocessor">.Before</span><span class="hljs-comment">;</span>
+import org<span class="hljs-preprocessor">.springframework</span><span class="hljs-preprocessor">.stereotype</span><span class="hljs-preprocessor">.Component</span><span class="hljs-comment">;</span>
+<span class="hljs-comment">/**
+ * 声明该类为切面:
+ *    1.让IOC容器创建这个类的bean(@Component)
+ *    2.声明为切面(@Aspect)
+ */</span>
+@Aspect
+@Component
+public class LoggingAscept {
+
+    @Before(<span class="hljs-string">"execution(* com.zj.asceptj.*.*(..))"</span>)
+    public void beforeMethod(JoinPoint joinpoint){
+        //注意，JoinPoint来自org<span class="hljs-preprocessor">.aspectj</span><span class="hljs-preprocessor">.lang</span><span class="hljs-preprocessor">.JoinPoint</span>，小心导错包
+        //方法名
+        String methodName = joinpoint<span class="hljs-preprocessor">.getSignature</span>()<span class="hljs-preprocessor">.getName</span>()<span class="hljs-comment">;</span>
+        //方法参数
+        List&lt;Object&gt; args = Arrays<span class="hljs-preprocessor">.asList</span>(joinpoint<span class="hljs-preprocessor">.getArgs</span>())<span class="hljs-comment">;</span>
+        System<span class="hljs-preprocessor">.out</span><span class="hljs-preprocessor">.println</span>(<span class="hljs-string">"method "</span>+methodName+<span class="hljs-string">" begin:"</span>+args)<span class="hljs-comment">;</span>
+    }
+
+    @After(<span class="hljs-string">"execution(* com.zj.asceptj.*.*(..))"</span>)
+    public void afterMethod(JoinPoint joinpoint){
+        //注意，JoinPoint来自org<span class="hljs-preprocessor">.aspectj</span><span class="hljs-preprocessor">.lang</span><span class="hljs-preprocessor">.JoinPoint</span>，小心导错包
+        //方法名
+        String methodName = joinpoint<span class="hljs-preprocessor">.getSignature</span>()<span class="hljs-preprocessor">.getName</span>()<span class="hljs-comment">;</span>
+        //方法参数
+        List&lt;Object&gt; args = Arrays<span class="hljs-preprocessor">.asList</span>(joinpoint<span class="hljs-preprocessor">.getArgs</span>())<span class="hljs-comment">;</span>
+        System<span class="hljs-preprocessor">.out</span><span class="hljs-preprocessor">.println</span>(<span class="hljs-string">"method "</span>+methodName+<span class="hljs-string">" end:"</span>+args)<span class="hljs-comment">;</span>
+    }
+}</code><ul class="pre-numbering" style="opacity: 0;"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li></ul><div class="save_code tracking-ad" data-mod="popu_249"><a href="javascript:;" target="_blank"><img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/save_snippets.png"></a></div><ul class="pre-numbering" style=""><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li><li>11</li><li>12</li><li>13</li><li>14</li><li>15</li><li>16</li><li>17</li><li>18</li><li>19</li><li>20</li><li>21</li><li>22</li><li>23</li><li>24</li><li>25</li><li>26</li><li>27</li><li>28</li><li>29</li><li>30</li><li>31</li><li>32</li><li>33</li><li>34</li><li>35</li><li>36</li><li>37</li><li>38</li><li>39</li></ul></pre>
+
+<blockquote>
+  <ul>
+  <li>注意，无论方法是否抛出异常，后置通知都会被执行</li>
+  <li>后置通知不能得到目标方法的返回值，返回值需要在返回通知中才能得到</li>
+  </ul>
+</blockquote></div>
+        <script type="text/javascript">
+            $(function () {
+                $('pre.prettyprint code').each(function () {
+                    var lines = $(this).text().split('\n').length;
+                    var $numbering = $('<ul></ul>').addClass('pre-numbering').hide();
+                    $(this).addClass('has-numbering').parent().append($numbering);
+                    for (i = 1; i <= lines; i++) {
+                        $numbering.append($('<li></li>').text(i));
+                    };
+                    $numbering.fadeIn(1700);
+                });
+            });
+        </script>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad bdshare-button-style0-16" style="float: right;" data-mod="popu_172" data-bd-bind="1503711409272">
+<a href="http://blog.csdn.net/u010837612/article/details/45583581#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important" target="_blank"></a>
+<a href="http://blog.csdn.net/u010837612/article/details/45583581#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" style="background-position:0 -52px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/u010837612/article/details/45583581#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" style="background-position:0 -104px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/u010837612/article/details/45583581#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博" style="background-position:0 -260px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/u010837612/article/details/45583581#" class="bds_renren" data-cmd="renren" title="分享到人人网" style="background-position:0 -208px !important" target="_blank"></a>
+<a href="http://blog.csdn.net/u010837612/article/details/45583581#" class="bds_weixin" data-cmd="weixin" title="分享到微信" style="background-position:0 -1612px !important" target="_blank"></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   
+
+<!--172.16.140.12-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/bds_s_v2.js.下载"></script>
+
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+
+ 
+
+
+        <div id="digg" articleid="45583581">
+            <dl id="btnDigg" class="digg digg_disable" onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>0</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable" onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" target="_blank">&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" target="_blank">&nbsp;</a></div>
+    <script type="text/javascript">
+        function btndigga() {
+            $(".tracking-ad[data-mod='popu_222'] a").click();
+        }
+        function btnburya() {
+            $(".tracking-ad[data-mod='popu_223'] a").click();
+        }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;]);location.href=&#39;http://blog.csdn.net/u010837612/article/details/45583059&#39;;">上一篇</span><a href="http://blog.csdn.net/u010837612/article/details/45583059" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;])">spring学习笔记（15）——AOP基础</a></li>
+                <li class="next_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;]);location.href=&#39;http://blog.csdn.net/u010837612/article/details/45599145&#39;;">下一篇</span><a href="http://blog.csdn.net/u010837612/article/details/45599145" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;])">spring学习笔记（17）——返回通知&amp;异常通知&amp;环绕通知</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+            <div class="similar_article">
+                    <h4></h4>
+                    <div class="similar_c" style="margin:20px 0px 0px 0px">
+                        <div class="similar_c_t">
+                          &nbsp;&nbsp;相关文章推荐
+                        </div>
+                   
+                        <div class="similar_wrap tracking-ad" data-mod="popu_36" style="max-height:250px">                       
+                            <ul class="similar_list fl">    
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/chjttony/article/details/6026079" title="Spring学习笔记1——基础知识" strategy="BlogCommendFromBaidu" target="_blank">Spring学习笔记1——基础知识</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/detail/491?utm_source=blog7" title="【直播】70天软考冲刺计划--任铄" strategy="undefined" target="_blank">【直播】70天软考冲刺计划--任铄</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/wp1603710463/article/details/50465051" title="Spring学习笔记—Spring之旅" strategy="BlogCommendFromBaidu" target="_blank">Spring学习笔记—Spring之旅</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/series_detail/60?utm_source=blog7" title="【直播】打通Linux脉络 进程、线程、调度--宋宝华" strategy="undefined" target="_blank">【直播】打通Linux脉络 进程、线程、调度--宋宝华</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/u011225629/article/details/45417519" title="Spring学习笔记（1）---------初识Spring" strategy="BlogCommendFromBaidu" target="_blank">Spring学习笔记（1）---------初识Spring</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/huiyiCourse/series_detail/48?utm_source=blog7" title="【直播】机器学习之凸优化--马博士" strategy="undefined" target="_blank">【直播】机器学习之凸优化--马博士</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/feifei454498130/article/details/43891781" title="Android微信抢红包外挂 源代码" strategy="BlogCommendFromBaidu" target="_blank">Android微信抢红包外挂 源代码</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/combo/detail/522?utm_source=blog7" title="【套餐】MATLAB基础+MATLAB数据分析与统计--魏伟" strategy="undefined" target="_blank">【套餐】MATLAB基础+MATLAB数据分析与统计--魏伟</a>
+                                   </li>
+                            </ul>
+                              <ul class="similar_list fr">      
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/chenssy/article/details/8188570" title="Spring 读书笔记-----使用Spring容器（一）" strategy="BlogCommendFromBaidu" target="_blank">Spring 读书笔记-----使用Spring容器（一）</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://edu.csdn.net/course/detail/5662?utm_source=blog7" title="【课程】3小时掌握Docker最佳实战--徐西宁" strategy="undefined" target="_blank">【课程】3小时掌握Docker最佳实战--徐西宁</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/wp1603710463/article/details/50478404" title="Spring学习笔记—装配Bean" strategy="BlogCommendFromBaidu" target="_blank">Spring学习笔记—装配Bean</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/u010837612/article/details/45583581" title="【课程】深度学习基础与TensorFlow实践--AI100" strategy="undefined" target="_blank">【课程】深度学习基础与TensorFlow实践--AI100</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/samjustin1/article/details/52262936" title="Spring学习笔记（一）" strategy="BlogCommendFromBaidu" target="_blank">Spring学习笔记（一）</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/zhangao0086/article/details/6278278" title="Spring学习笔记" strategy="BlogCommendFromBaidu" target="_blank">Spring学习笔记</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/zy691357966/article/details/51148105" title="[跟我学spring学习笔记][更多DI知识]" strategy="BlogCommendFromBaidu" target="_blank">[跟我学spring学习笔记][更多DI知识]</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/u010837612/article/details/45716725" title="spring学习笔记（25）——spring基本思路" strategy="BlogCommendFromBaidu" target="_blank">spring学习笔记（25）——spring基本思路</a>
+                                   </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>   
+      
+</div>
+
+     <div>
+           
+
+       
+                           
+            <!-- 广告位：PC端-博客内容页-banner1-960*90 --> 
+            <script> 
+                (function() { 
+                    var s = "_" + Math.random().toString(36).slice(2); 
+                    document.write('<div id="' + s + '"></div>'); 
+                    (window.slotbydup=window.slotbydup || []).push({ 
+                        id: '4228013', 
+                        container: s, 
+                        size: '0,0', 
+                        display: 'inlay-fix' 
+                    }); 
+                })(); 
+            </script><div id="_nyjfj4fa6i"></div><script charset="utf-8" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/ncym"></script><script type="text/javascript">
+    /*测试-博客内容页下方Banner1-960*90*/
+    var cpro_id = "u2998112";
+</script>
+<script type="text/javascript" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/c.js.下载"></script><div id="BAIDU_SSP__wrapper_u2998112_0"><iframe id="iframeu2998112_0" name="iframeu2998112_0" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/ncym(1).html" width="960" height="90" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0;vertical-align:bottom;margin:0;width:960px;height:90px" allowtransparency="true"></iframe></div>
+
+    </div>
+
+<div id="suggest">
+
+</div>
+         <script language="javascript" type="text/javascript">     
+             $(function(){
+                 $.get("/u010837612/svc/GetSuggestContent/45583581",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+
+            
+                                    
+            
+                                    
+
+        <!-- 广告位开始 -->
+        <!-- 广告位结束 -->
+
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list"><dl class="comment_item comment_topic" id="comment_item_6702519"><dt class="comment_head" floor="1">1楼 <span class="user"><a class="username" href="http://blog.csdn.net/qq_35736941" target="_blank">泡在酒瓶里的星星</a> <span class="ptime">2017-03-26 18:33发表</span>  <a href="http://blog.csdn.net/u010837612/article/details/45583581#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="6702519" username="qq_35736941"> <a href="http://blog.csdn.net/u010837612/article/details/45583581#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="http://blog.csdn.net/u010837612/article/details/45583581#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/qq_35736941" target="_blank"><img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/3_qq_35736941.jpg" width="40" height="40"></a></dd><dd class="comment_body">前辈问一下Spring的jar包去哪里下，我下的这个没有你前面的几个com开头的jar包。</dd></dl><div class="clear"></div></div>
+    <div id="comment_bar" style="display: none;">
+    </div>
+    <div id="comment_form"><div class="guest_link">您还没有登录,请<a href="javascript:void(0);" onclick="javascript:loginbox();">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fu010837612%2Farticle%2Fdetails%2F45583581">[注册]</a></div></div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '45583581';
+    var commentscount = 1;
+    var islock = false
+</script>
+
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top" style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop" style="display: none;" title="返回顶部" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_huidaodingbu&#39;])">         
+         <img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){        
+        
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+    var articletitle='spring学习笔记（16）——AOP之前后置通知';
+
+</script>
+
+
+
+
+
+
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/u010837612" target="_blank">
+    <img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/1_u010837612.jpg" title="访问我的空间" style="max-width:90%">
+    </a>
+    <br>
+    <span><a href="http://my.csdn.net/u010837612" class="user_name" target="_blank">君君要上天</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter" title="[发私信]" onclick="window.open(&#39;http://msg.csdn.net/letters/model?receiver=u010837612&#39;,&#39;_blank&#39;,&#39;height=350,width=700&#39;);_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_sixin&#39;])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>183126次</span></li>
+    <li>积分：<span>4082</span> </li>    
+    <li>等级： <span style="position:relative;display:inline-block;z-index:1">
+            <img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/blog5.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：4082 </div>
+        </span>  </li>
+    <li>排名：<span>第7644名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>226篇</span></li>
+    <li>转载：<span>2篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>60条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search csdn-tracking-statistics" target="_blank" data-mod="popu_306">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字"></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog">
+        <input type="hidden" name="q" id="inputQ">
+        <input type="hidden" name="t" value="blog">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+
+   
+    $(function () {
+        $("#btnSubmit").unbind("click");
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {           
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            if ($("#inputSearch").val() == "") {               
+                alert("请录入搜索关键词！");                         
+                return false;
+            }
+            //var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";           
+            var url = "https://www.baidu.com/s?wd=" + encodeURIComponent($("#inputSearch").val()) + "%20site%3Ablog.csdn.net"
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/2331841" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">C#</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/2331845" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">设计模式</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/3127179" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">springmvc</a><span>(33)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/3160277" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">spring4</a><span>(27)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/3206237" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">mybatis</a><span>(10)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/3221223" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">WebService</a><span>(6)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/3272455" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">shiro</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/5726105" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">开发小笔记</a><span>(19)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/5727457" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">JAVA</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/5732811" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">JPA</a><span>(15)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/6060372" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">linux</a><span>(68)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/6114847" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">eclipse</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/6243655" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">php</a><span>(15)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/6251901" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">ThinkPHP</a><span>(9)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/6335292" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">docker</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/6887964" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">mysql</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/6887972" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">git</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="http://blog.csdn.net/u010837612/article/category/6887977" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">sphinx</a><span>(6)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list"><li><a href="http://blog.csdn.net/u010837612/article/month/2017/08">2017年08月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2017/06">2017年06月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2017/04">2017年04月</a><span>(14)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2016/11">2016年11月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2016/10">2016年10月</a><span>(1)</span></li><span class="hidelist" style="display:none;"><li><a href="http://blog.csdn.net/u010837612/article/month/2016/09">2016年09月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2016/08">2016年08月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2016/07">2016年07月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2016/06">2016年06月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2016/05">2016年05月</a><span>(19)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2016/04">2016年04月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2016/03">2016年03月</a><span>(56)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2016/02">2016年02月</a><span>(15)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2016/01">2016年01月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2015/12">2015年12月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2015/08">2015年08月</a><span>(19)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2015/06">2015年06月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2015/05">2015年05月</a><span>(41)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2015/04">2015年04月</a><span>(36)</span></li><li><a href="http://blog.csdn.net/u010837612/article/month/2014/06">2014年06月</a><span>(3)</span></li></span><div id="archive_list_button" class="list_closed">展开</div></div>
+</ul>
+</div>
+<div id="hotarticls" class="panel tracking-ad" data-mod="popu_340">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/50233077" title="JS判断变量是否以某个字符串结尾" target="_blank">JS判断变量是否以某个字符串结尾</a><span>(9167)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/45199919" title="springmvc学习笔记（7）——传递对象作为参数（POJO）" target="_blank">springmvc学习笔记（7）——传递对象作为参数（POJO）</a><span>(6611)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/45392589" title="springmvc学习笔记（30）——ResponseStatus注解处理异常" target="_blank">springmvc学习笔记（30）——ResponseStatus注解处理异常</a><span>(5737)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/46053249" title="Shiro学习笔记（2）——身份验证之Realm" target="_blank">Shiro学习笔记（2）——身份验证之Realm</a><span>(5626)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/45726497" title="WebService（3）——使用免费的天气预报WebService" target="_blank">WebService（3）——使用免费的天气预报WebService</a><span>(5613)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/47666131" title="JPA学习笔记（5）——EntityManager相关" target="_blank">JPA学习笔记（5）——EntityManager相关</a><span>(5390)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/46126157" title="Shiro学习笔记（3）——授权（Authorization）" target="_blank">Shiro学习笔记（3）——授权（Authorization）</a><span>(3961)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/50442840" title="jsp和js如何将java中Date类型格式化显示" target="_blank">jsp和js如何将java中Date类型格式化显示</a><span>(3646)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/47612149" title="JPA学习笔记（2）——创建JPA项目" target="_blank">JPA学习笔记（2）——创建JPA项目</a><span>(3203)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/50781871" title="Shiro学习笔记（6）——shiro缓存" target="_blank">Shiro学习笔记（6）——shiro缓存</a><span>(3082)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel tracking-ad" data-mod="popu_341">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/50686573" title="自己动手写个spring IOC容器" target="_blank">自己动手写个spring IOC容器</a><span>(7)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/45726497" title="WebService（3）——使用免费的天气预报WebService" target="_blank">WebService（3）——使用免费的天气预报WebService</a><span>(3)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/30470277" title="设计模式（简单工厂模式）" target="_blank">设计模式（简单工厂模式）</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/45558271" title="spring学习笔记（7）——引用外部文件" target="_blank">spring学习笔记（7）——引用外部文件</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/47666131" title="JPA学习笔记（5）——EntityManager相关" target="_blank">JPA学习笔记（5）——EntityManager相关</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/47610823" title="JPA学习笔记（1）——什么是JPA" target="_blank">JPA学习笔记（1）——什么是JPA</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/45396277" title="spring学习笔记（1）——创建spring项目之HelloWorld" target="_blank">spring学习笔记（1）——创建spring项目之HelloWorld</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/46225825" title="Shiro学习笔记（4）——ini 配置" target="_blank">Shiro学习笔记（4）——ini 配置</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/77162328" title="jquery checkbox全选/反选" target="_blank">jquery checkbox全选/反选</a><span>(2)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/u010837612/article/details/46126157" title="Shiro学习笔记（3）——授权（Authorization）" target="_blank">Shiro学习笔记（3）——授权（Authorization）</a><span>(2)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/blogdevteam/article/details/77532934" target="_blank">* CSDN日报20170824——《你为什么跳槽？真正原因找到了吗？》</a></li>
+<li><a href="http://blog.csdn.net/21cnbao/article/details/77505330" target="_blank">* Linux的任督二脉：进程调度和内存管理</a></li>
+<li><a href="http://blog.csdn.net/bemavery/article/details/77448589" target="_blank">* 秒杀系统的一点思考</a></li>
+<li><a href="http://blog.csdn.net/sweettool/article/details/77018506" target="_blank">* TCP网络通讯如何解决分包粘包问题</a></li>
+<li><a href="http://blog.csdn.net/mindfloating/article/details/77434604" target="_blank">* 技术与技术人员的价值</a></li>
+<li><a href="http://blog.csdn.net/gitchat/article/details/77338211" target="_blank">* GitChat·人工智能 | 除了深度学习，机器翻译还需要啥？
+</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="http://blog.csdn.net/u010837612/article/details/77162328#comments">jquery checkbox全选/反选</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u010837612" class="user_name">君君要上天</a>:
+@qq412418:不客气
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/u010837612/article/details/77162328#comments">jquery checkbox全选/反选</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/qq412418" class="user_name">qq412418</a>:
+感谢楼主分享。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/u010837612/article/details/51852837#comments">mysql删除某个字段重复的数据</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/yuanchengmm" class="user_name">AdminRootDBA</a>:
+很好，学习了
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/u010837612/article/details/46126157#comments">Shiro学习笔记（3）——授权（Authorization）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u010837612" class="user_name">君君要上天</a>:
+@janda2011:不是的。这里配置的不是url地址，而是一个权限的标识，用封号分割标识层级关系。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/u010837612/article/details/46126157#comments">Shiro学习笔记（3）——授权（Authorization）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/janda2011" class="user_name">等待时候</a>:
+//权限        Set&amp;lt;String&amp;gt; s = new HashSet&amp;lt;S...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/u010837612/article/details/45396277#comments">spring学习笔记（1）——创建spring项目之HelloWorld</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u010837612" class="user_name">君君要上天</a>:
+@qq_38939705:百度一下，这不是什么很稀有的资源，找找就有了。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/u010837612/article/details/45396277#comments">spring学习笔记（1）——创建spring项目之HelloWorld</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/qq_38939705" class="user_name">qq_38939705</a>:
+spring需要的基本的jar包,请为博主，这些jar包是在哪里的？请原谅我还是个菜鸟
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/u010837612/article/details/50686573#comments">自己动手写个spring IOC容器</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u010837612" class="user_name">君君要上天</a>:
+@wodetongnian:sorry，过了半年了才发现这个问题。现已重新上传demo，帖子中也有B...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/u010837612/article/details/50686573#comments">自己动手写个spring IOC容器</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/tian_yan71" class="user_name">谍纸天眼</a>:
+太坑了，BeanUtil类呢
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/u010837612/article/details/45558271#comments">spring学习笔记（7）——引用外部文件</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u010837612" class="user_name">君君要上天</a>:
+@u011626283:感谢
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+
+                 <!-- 广告位开始 --> 
+                <!-- 广告位结束 -->
+                   <div class="tracking-ad" data-view="true" data-mod="ad_popu_189" data-mtp="63" data-order="40" data-con="ad_content_1259" style="width: 250px; height: 500px;">
+                        <div id="nav_show_top_stop" style="width: 250px; height: 500px; z-index: 1000; position: fixed; top: 0px;"><div id="cpro_u2734133"><iframe id="iframeu2734133_0" name="iframeu2734133_0" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/ncym(2).html" width="250" height="250" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0;vertical-align:bottom;margin:0;width:250px;height:250px" allowtransparency="true"></iframe></div><div id="cpro_u3031286"><iframe id="iframeu3031286_0" name="iframeu3031286_0" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/ncym(3).html" width="250" height="250" align="center,center" vspace="0" hspace="0" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" style="border:0;vertical-align:bottom;margin:0;width:250px;height:250px" allowtransparency="true"></iframe></div></div>
+                   </div>
+                    <script>
+
+                        setTimeout(function () {
+                            var naviga_offsetTop = 0; function naviga_stay_top() {
+                                var scrollTop = jQuery(document).scrollTop();
+                                if (scrollTop > naviga_offsetTop) {
+                                    jQuery("#nav_show_top_stop").css({ "position": "fixed" });
+                                    jQuery("#nav_show_top_stop").css({ "top": "0px" });
+                                } else { jQuery("#nav_show_top_stop").css({ "position": "fixed" }); jQuery("#nav_show_top_stop").css({ "top": naviga_offsetTop - scrollTop + "px" }); }
+                            }
+                            function onload_function() {
+                                naviga_offsetTop = jQuery("#nav_show_top_stop").position().top;
+                                jQuery(window).bind("scroll", naviga_stay_top); jQuery(window).bind("mousewheel", naviga_stay_top);
+                                jQuery(document).bind("scroll", naviga_stay_top); jQuery(document).bind("mousewheel", naviga_stay_top);
+                            } jQuery(document).ready(onload_function);
+                        }, 200);
+
+                    </script>
+                   <script type="text/javascript">
+                       /*PC端-博客内容页左侧Button-250*250，创建于2016-08-15*/
+                       (window.cproArray = window.cproArray || []).push({ id: "u2734133" });
+</script>
+<script type="text/javascript" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/c.js.下载"></script>
+<script type="text/javascript">
+    (window.cproArray = window.cproArray || []).push({ id: "u3031286" });
+</script>
+<script type="text/javascript" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/c.js.下载"></script>
+
+           </div>   
+
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/login.js.下载"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div>
+      <!--new top-->
+    
+
+     
+
+   
+   
+     <!--new top-->
+   
+   
+
+    
+    
+    
+   
+
+   
+
+
+       <script type="text/javascript" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/MathJax.js.下载"></script>
+          <script type="text/javascript">
+              //$(function () {
+              //    setTimeout(function () {
+              //        var searchtitletags = articletitle + ',' + $("#tags").html();
+              //        searchService({
+              //            index: 'blog',
+              //            query: searchtitletags,
+              //            from: 5,
+              //            size: 5,
+              //            appendTo: '#res',
+              //            url: 'recommend',
+              //            his: 2,
+              //            client: "blog_cf_enhance",
+              //            tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+              //        });
+              //    }, 1000);
+              //});
+
+         </script>
+    
+    <script src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/csdn_blog_detail.min.js.下载" type="text/javascript"></script><link rel="stylesheet" type="text/css" href="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/pub_footer_2014.css"><div class="pub_fo"><div id="pub_footerall" class="pub_footer_new"><dl><dt></dt> <dd class="foot_sub_menu"><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a><span>|</span><a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a><span>|</span><a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a><span>|</span><a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a><span>|</span><a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a><span>|</span><a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a><span>|</span><a href="mailto:webmaster@csdn.net">问题报告</a><span>|</span><a target="_blank" href="http://www.csdn.net/friendlink.html">合作伙伴</a><span>|</span><a href="http://bbs.csdn.net/forums/Service" target="_blank">论坛反馈</a></dd><dd class="foot_contact"><a href="javascript:void(0);" target="_blank" class="qq">网站客服</a><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2251809102&amp;site=qq&amp;menu=yes" target="_blank" class="qq">杂志客服</a><a href="http://e.weibo.com/csdnsupport/profile" target="_blank" class="weibo">微博客服</a><a href="mailto:webmaster@csdn.net" class="email" title="联系邮箱">webmaster@csdn.net</a><span class="phone" title="服务热线">400-660-0108</span><span class="interval">|</span><span>北京创新乐知信息技术有限公司 版权所有</span><span class="interval">|</span><span>江苏知之为计算机有限公司</span><span class="interval">|</span><span>江苏乐知网络技术有限公司</span></dd><dd class="foot_copyright"><span>京&nbsp;ICP&nbsp;证&nbsp;09002463&nbsp;号</span><span class="interval">|</span><span>Copyright © 1999-2017, CSDN.NET, All Rights Reserved&nbsp;</span><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div></div><div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display:none; position:absolute; z-index:9990; width:170px">  <iframe src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/saved_resource(2).html" frameborder="0" scrolling="no" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void 0" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/notify.js.下载"></script><input type="hidden" id="aa_g_data_ids">
+        
+    <script type="text/javascript" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/csdn_public_blog_detail.min.js.下载"></script>
+
+    <script type="text/javascript" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/showblogmedal.ashx"></script>
+
+     
+    
+
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334" src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/52b5334.js.下载"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+    
+    
+        
+     
+
+    
+          
+    <div class="pop_CA_cover" style="display:none"></div>
+    <div class="pop pop_CA" style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon" id="fapancle" onclick="$(&#39;.pop_CA&#39;).hide();$(&#39;.pop_CA_cover&#39;).hide();"></span>
+          </div>
+          <iframe src="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/saved_resource(3).html" id="fa" frameborder="0" width="100%" height="360" scrolling="no"></iframe>
+    </div>
+
+
+        <script type="text/javascript">
+
+            $(function () {
+                var fromjs = $("#fromjs");
+                if (fromjs.length > 0) {
+                    $("#fromjs .markdown_views pre").addClass("prettyprint");
+                    prettyPrint();
+
+                    $('pre.prettyprint code').each(function () {
+                        var lines = $(this).text().split('\n').length;
+                        var $numbering = $('<ul/>').addClass('pre-numbering').hide();
+                        $(this).addClass('has-numbering').parent().append($numbering);
+                        for (i = 1; i <= lines; i++) {
+                            $numbering.append($('<li/>').text(i));
+                        };
+                        $numbering.fadeIn(1700);
+                    });
+
+                    $('.pre-numbering li').css("color", "#999");
+                }
+            });
+
+            $(".markdown_views a[target!='_blank']").attr("target", "_blank");
+
+            //$(".toc a[target='_blank']").attr("target", "");
+
+            setTimeout(function () {
+                $(".toc a[target='_blank']").attr("target", "");
+            }, 500);
+
+        </script>
+
+
+   
+<div id="tag-suggest-pop">
+  <div class="relative">
+    <div class="close"></div>
+    <div class="content"></div>
+  </div>
+</div><div id="mask_code"></div><div class="gist_edit"><div class="save_snippets clearfix"><div class="tit"><h3>保存代码片</h3><span>整理和分享保存的代码片，请访问<a href="https://code.csdn.net/snippets_manage" target="_blank">代码笔记</a></span></div><div class="con_form"><ul class="gist_edit_list clearfix"><li><span class="red">*</span><span class="txt">标题</span><input id="form_title" class="form-input" placeholder="spring学习笔记（16）——AOP之前后置通知" type="text"></li><li><span class="red">*</span><span class="txt">描述</span><textarea id="form-textarea" class="form-textarea" placeholder="spring学习笔记（16）——AOP之前后置通知： http://blog.csdn.net/u010837612/article/details/45583581"></textarea></li><li><span class="red">&nbsp;</span><span class="txt">标签</span><div id="divSearchTags"><span class="label blog_tag"><span>spring</span><a title="Removing tag" href="javascript:;">x</a></span><input id="insertTag" class="insertTag" placeholder="请输入标签，按Enter生成(最多5项)" type="text" value="" name="insertTag" maxlength="21" style="color: rgb(51, 51, 51);"><input id="OrganTag" class="OrganTag" type="hidden" name="OrganTag" value="spring,"><input id="OldOrganTag" class="OldOrganTag" type="hidden" name="OldOrganTag" value=""><input type="hidden" name="txtSearchTags"></div></li></ul></div><div class="bottom-bar"><a href="javascript:;" class="btn-submit btn-cancel">取消</a><span class="tracking-ad" data-mod="popu_250"><a class="btn-submit btn-confirm" href="javascript:;" target="_blank">确定</a></span></div></div></div><link rel="stylesheet" type="text/css" media="screen" href="./spring学习笔记（16）——AOP之前后置通知 - 君君的专栏 - CSDN博客_files/ask_float_fonts_css-6b30a53970eb5c3a2a045e3df585b475.css"><div data-mod="popu_64" class="csdn-tracking-statistics" chg-blk="0"><a id="com-quick-QRcode" class="QRcodebg1" title="扫描二维码" style="top:128px"><span class="closeQR"></span></a><a id="com-quick-reply" title="快速回复" style="top:262px"></a><a id="com-quick-collect" title="我要收藏" style="top:300px"></a><a id="com-d-top-a" style="top: 338px; display: inline;" title="返回顶部" onclick=""></a></div><div class="pop_edit ask_second comm_ask_second"><h3>提问</h3><span class="ask_float_span">您的问题将会被发布在“<a class="ask_float_channel" href="http://ask.csdn.net/" target="_blank" style="cursor:pointer">技术问答</a>”频道</span><a href="http://blog.csdn.net/u010837612/article/details/45583581#" nodetype="close" class="close">×</a><div class="context"><div class="err_div"><span class="err_ico"></span><span class="err_txt">该问题已存在，请勿重复提问</span></div><div class="input_div"><input id="askInputSecond" type="text" style="font-size:14px;" placeholder="问题标题"></div><div class="cm_box"><div class="cm_dialog"></div> <div class="pop_cm cm_add_link"><input type="text" placeholder="链接内容" id="af_cm_link_txt"><input type="text" placeholder="链接地址" id="af_cm_link_url"><input type="text" placeholder="链接提示" id="af_cm_link_tit"><div class="text-right"><span class="btn btn-default btn-sm" id="add_link_btn">插入链接</span> </div> </div><div class="pop_cm cm_add_img"><div class="nav-tabs"><a class="img_tab active" href="http://blog.csdn.net/u010837612/article/details/45583581#tab_upload">本地上传</a><a class="img_tab" href="http://blog.csdn.net/u010837612/article/details/45583581#tab_weburl">网络图片</a></div><div class="tab_panel active" id="tab_upload"><div class="set_img"></div></div><div class="tab_panel" id="tab_weburl"><input type="text" placeholder="图片地址" id="af_cm_img_url"><input type="text" placeholder="图片说明" id="af_cm_img_alt"><div class="text-right"><span class="btn btn-default btn-sm" id="add_img_btn">插入图片</span> </div></div> </div></div> <textarea id="editor_all" rows="8" style="display: none;"></textarea><div class="editor-toolbar"><i class="separator">|</i><a class="icon-headline" title="标题一（Ctrl+Alt+1）"></a><a class="icon-heading" title="标题二（Ctrl+Alt+2）"></a><a class="icon-bold" title="粗体（Ctrl+B）"></a><a class="icon-italic" title="斜体（Ctrl+I）"></a><i class="separator">|</i><a class="icon-quote-left" title="引用（Ctrl+’）"></a><a class="icon-code" title="插入代码片（Ctrl+,）"></a><a class="icon-list-ul" title="无序列表（Ctrl+L）"></a><a class="icon-list-ol" title="有序列表（Ctrl+Alt+L）"></a><i class="separator">|</i><a class="icon-link" title="添加链接（Ctrl+K）"></a><a class="icon-picture" title="添加图片（Ctrl+Alt+I）"></a><i class="separator">|</i><a class="icon-reply" title="撤退（Ctrl+Z）"></a><a class="icon-share-alt" title="前进（Ctrl+Shift+Z）"></a><i class="separator">|</i><a class="icon-info" href="http://ask.csdn.net/pages/markdown" target="_blank" title="markdown语法参考"></a><a class="icon-preview" title="预览"></a><i class="separator">|</i></div><div class="CodeMirror cm-s-paper CodeMirror-focused"><div style="overflow: hidden; position: relative; width: 3px; height: 0px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none; font-size: 4px;" tabindex="0"></textarea></div><div class="CodeMirror-hscrollbar"><div style="height: 1px;"></div></div><div class="CodeMirror-vscrollbar"><div style="width: 1px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="min-width: 33px;"><div style="position: relative;"><div class="CodeMirror-lines"><div style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>&nbsp;<span style="display: inline-block; width: 1px; margin-right: -1px;">&nbsp;</span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code"></div><div class="CodeMirror-cursor" style="visibility: hidden;">&nbsp;</div><div class="CodeMirror-cursor CodeMirror-secondarycursor" style="visibility: hidden;">&nbsp;</div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div class="CodeMirror-gutters" style="display: none;"></div></div></div><div class="editor-statusbar"><span class="lines">0</span><span class="words">0</span><span class="cursor">0:0</span></div><div class="div_tags clearfix"><div id="divSearchTags" class="tags_con"><input type="text"></div><input type="hidden" name="txtSearchTags"></div><div id="ask2_tagRecomm_div" class="drt_tagRecomm tracking-ad" data-mod="popu_73"><span class="drt_tit">推荐标签：</span></div></div><div class="success"><div class="left_area"><input id="chk_cb" type="checkbox"><span class="wyxs">我要悬赏</span><input id="cb_num" class="cb_num" readonly="true"><span class="phib_rii"><span> 币</span></span></div><a href="http://blog.csdn.net/u010837612/article/details/45583581#" nodetype="cancel" class="cancel">取消</a><a href="http://blog.csdn.net/u010837612/article/details/45583581#" nodetype="ok" class="ok">发布</a></div></div><div id="common_ask_div_sc" class="searchContainer"><div class="sTitle">可能存在类似的问题：</div><div class="sFooter"><a class="sFirstNewAsk">我想提一个新问题</a></div></div><div style="position:fixed; top:0; left:0; overflow:hidden;"><input style="position:absolute; left:-300px;" type="text" value="" id="focus_retriever" readonly="true"></div></body></html>
